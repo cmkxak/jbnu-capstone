@@ -1,4 +1,4 @@
-package com.example.firsttest.view;
+package com.example.firsttest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -64,20 +64,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 canRegister = false;
                             }
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "ㅈ됨 ㄹㅇㅋㅋ", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
                 };
-
-                String id = charSequence.toString();
-                ValidateRequest validateRequest = new ValidateRequest(id, responseListener);
-                queue.add(validateRequest);
-
-//                String text = charSequence.toString();
-//                if (text.length() < 8) { binding.signupID.setTextColor(Color.RED); }
-//                else { binding.signupID.setTextColor(Color.BLACK); }
-
             }
 
             @Override
