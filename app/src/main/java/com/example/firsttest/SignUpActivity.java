@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -11,13 +11,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.firsttest.databinding.ActivityLoginBinding;
+import com.example.firsttest.SignUpRequest;
+import com.example.firsttest.ValidateRequest;
 import com.example.firsttest.databinding.ActivitySignUpBinding;
 
 import org.json.JSONObject;
