@@ -4,10 +4,11 @@ import numpy as np
 import time, os #시간 호출
 
 
-folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/abnormal"
+folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/normal"
 
 # actions = ['normal','fall', 'stand', 'lie']
 actions = ['normal', 'abnormal']
+idx = 0 # 0 = normal, 1 = abnormal
 seq_length = 15
 # secs_for_action = 30
 
@@ -32,9 +33,7 @@ for (root, directories, files) in os.walk(folderPath):
         os.makedirs('dataset', exist_ok=True)
 
         while cap.isOpened():
-            for idx, action in enumerate(actions):
-                if action == 'abnormal':
-                    continue
+            for action in actions:
 
                 data = []
 

@@ -6,9 +6,9 @@ import os
 from tensorflow.keras.models import load_model
 
 actions = ['normal', 'abnormal']
-seq_length = 30
+seq_length = 15
 
-model = load_model('models/model.h5')
+model = load_model('models/modelV2_GRU_lying.h5')
 path = 'preprocessing'
 filePath = os.path.join(path, "FD_In_H11H21H31_0009_20201229_14.mp4_20220411_170822.mkv")
 print(filePath)
@@ -20,22 +20,22 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.4,
     min_tracking_confidence=0.4)
 
-if os.path.isfile(filePath):
-    cap = cv2.VideoCapture(filePath)
-else:
-    print("file is not exist")
-# cap = cv2.VideoCapture(0) #webcam capture
+# if os.path.isfile(filePath):
+#     cap = cv2.VideoCapture(filePath)
+# else:
+#     print("file is not exist")
+cap = cv2.VideoCapture(0) #webcam capture
 
 # frame size convert to int_type
-frameWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-frameHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-frameRate = int(cap.get(cv2.CAP_PROP_FPS))
+# frameWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+# frameHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+# frameRate = int(cap.get(cv2.CAP_PROP_FPS))
 # delay = round(1000/frameRate)
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight)) # initialize writer to save video
+# fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+# out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight)) # initialize writer to save video
 
 seq = []
-action_seq = []
+action_queue = []
 
 while cap.isOpened():
     ret, img = cap.read()
@@ -90,19 +90,19 @@ while cap.isOpened():
         #     print(i_pred)
 
         action = actions[i_pred]
-        action_seq.append(action)
+        action_queue.append(action)
 
-        if len(action_seq) < 10:
+        if len(action_queue) < 10:
             continue
         
-        action_seq.pop()
+        action_queue.pop(0)
         this_action = "normal"
         cnt = 0
-        for act in action_seq:
+        for act in action_queue:
             if act == "abnormal":
                 cnt += 1
         
-        if cnt > 3:
+        if cnt > 4:
             this_action = "abnormal"
 
         cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255, 255, 255), thickness=2)
