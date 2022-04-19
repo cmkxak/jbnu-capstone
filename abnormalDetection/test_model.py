@@ -6,10 +6,10 @@ import os
 from collections import Counter
 from tensorflow.keras.models import load_model
 
-actions = ['normal', 'abnormal', 'fall', 'lie', 'error']
+actions = ['normal', 'abnormal', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain']
 seq_length = 20
 
-model = load_model('models/modelV3.0_GRU_lying.h5')
+model = load_model('models/modelV4.0_GRU.h5')
 path = 'C:/Users/sang9/OneDrive/바탕 화면/preprocessing/abnormal'
 filePath = os.path.join(path, "FD_In_H11H21H31_0002_20201013_10.mp4_20220405_142615.mkv")
 print(filePath)
@@ -18,8 +18,8 @@ print(filePath)
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(
-    min_detection_confidence=0.5,
-    min_tracking_confidence=0.5)
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6)
 
 # if os.path.isfile(filePath):
 #     cap = cv2.VideoCapture(filePath)
@@ -88,7 +88,7 @@ while cap.isOpened():
         action = actions[i_pred]
         action_queue.append(action)
 
-        if len(action_queue) < 10:
+        if len(action_queue) < 16:
             continue
         
         action_queue.pop(0)

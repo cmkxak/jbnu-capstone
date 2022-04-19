@@ -2,22 +2,19 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time, os #시간 호출
+#error is at last
+actions = ['normal', 'abnormal', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain']
+idx = 6
+seq_length = 20
 
-
-folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/abnormal"
-
-# actions = ['normal','fall', 'stand', 'lie']
-actions = ['normal', 'abnormal']
-idx = 1 # 0 = normal, 1 = abnormal
-seq_length = 30
-# secs_for_action = 30
+folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing2/" + actions[idx]
 
 #MediaPipe pose model
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 poses = mp_pose.Pose(
-    min_detection_confidence=0.5,
-    min_tracking_confidence=0.5)
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6)
 
 for (root, directories, files) in os.walk(folderPath):
     for file in files:
@@ -34,14 +31,13 @@ for (root, directories, files) in os.walk(folderPath):
 
         while cap.isOpened():
             for action in actions:
+                if action != actions[idx]:
+                    continue
 
                 data = []
-
                 ret, img = cap.read()
-
                 img = cv2.flip(img, 1)
 
-                start_time = time.time()
                 while True:
                     ret, img = cap.read()
                     if ret != True:
@@ -62,7 +58,7 @@ for (root, directories, files) in os.walk(folderPath):
                         # Compute angles between joints
                         v1 = joint[[0,0,1,2,0,4,5,3,6,0,0 ,0 ,0 ,11,12,13,14,15,16,15,16,15,16,11,12,23,24,25,26,27,28,27,28,11,12,23,24], :3] # Parent joint
                         v2 = joint[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,12,11,24,23], :3] # Child joint
-                        v = v2 - v1 # [33, 4] but index[0] is null
+                        v = v2 - v1 # [33, 3] but index[0] is zero vector
                         # Normalize v
                         v = v / np.linalg.norm(v, axis=1)[:, np.newaxis]
 
