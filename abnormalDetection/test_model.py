@@ -6,13 +6,10 @@ import os
 from collections import Counter
 from tensorflow.keras.models import load_model
 
-actions = ['normal', 'abnormal', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain']
-seq_length = 20
+actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
+seq_length = 30
 
-model = load_model('models/modelV4.0_GRU.h5')
-path = 'C:/Users/sang9/OneDrive/바탕 화면/preprocessing/abnormal'
-filePath = os.path.join(path, "FD_In_H11H21H31_0002_20201013_10.mp4_20220405_142615.mkv")
-print(filePath)
+model = load_model('models/modelV5.0_WINDOW=30.h5')
 
 # MediaPipe hands model
 mp_pose = mp.solutions.pose

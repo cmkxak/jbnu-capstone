@@ -3,11 +3,11 @@ import mediapipe as mp
 import numpy as np
 import time, os #시간 호출
 #error is at last
-actions = ['normal', 'abnormal', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain']
-idx = 6
-seq_length = 20
+actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
+idx = 0
+seq_length = 30
 
-folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing2/" + actions[idx]
+folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/" + actions[idx]
 
 #MediaPipe pose model
 mp_pose = mp.solutions.pose
@@ -37,11 +37,18 @@ for (root, directories, files) in os.walk(folderPath):
                 data = []
                 ret, img = cap.read()
                 img = cv2.flip(img, 1)
+                cnt = 0
 
                 while True:
                     ret, img = cap.read()
                     if ret != True:
                         break
+
+                    # cnt += 1
+                    # if cnt < 100 or cnt > 195: # Frame Skipped
+                    #     continue
+                    # if cnt%2 == 0: # 30Frame to 15Frame
+                    #     continue
 
                     img = cv2.flip(img, 1)
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -82,9 +89,11 @@ for (root, directories, files) in os.walk(folderPath):
                     if cv2.waitKey(1) == 27:
                         break
 
+                #data array is composed of x,y,z coordinates(0:99) and visibility(99:132) and angles(132:161) and label(161:162)
                 data = np.array(data)
                 print(action, data.shape)
                 np.save(os.path.join('dataset', f'raw_{action}_{created_time}'), data)
+
 
                 # Create sequence data
                 full_seq_data = []
