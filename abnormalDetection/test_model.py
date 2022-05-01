@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
 seq_length = 30
 
-model = load_model('models/modelV5.0_WINDOW=30.h5')
+model = load_model('models/modelV5.4_WINDOW=30.h5')
 
 # MediaPipe hands model
 mp_pose = mp.solutions.pose

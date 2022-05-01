@@ -4,10 +4,10 @@ import numpy as np
 import time, os #시간 호출
 #error is at last
 actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
-idx = 0
+idx = 2
 seq_length = 30
 
-folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/" + actions[idx]
+folderPath = "C:/Users/sang9/OneDrive/바탕 화면/aihub/" + actions[idx] + "/108-151(20)"
 
 #MediaPipe pose model
 mp_pose = mp.solutions.pose
@@ -44,11 +44,11 @@ for (root, directories, files) in os.walk(folderPath):
                     if ret != True:
                         break
 
-                    # cnt += 1
-                    # if cnt < 100 or cnt > 195: # Frame Skipped
-                    #     continue
-                    # if cnt%2 == 0: # 30Frame to 15Frame
-                    #     continue
+                    cnt += 1
+                    if cnt < 43 or cnt > 97: # Frame Skipped
+                        continue
+                    if cnt%5 < 2: # 30Frame to 18Frame
+                        continue
 
                     img = cv2.flip(img, 1)
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -85,9 +85,9 @@ for (root, directories, files) in os.walk(folderPath):
 
                         mp_drawing.draw_landmarks(img, res.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
-                    cv2.imshow('img', img)
-                    if cv2.waitKey(1) == 27:
-                        break
+                    # cv2.imshow('img', img)
+                    # if cv2.waitKey(1) == 27:
+                    #     break
 
                 #data array is composed of x,y,z coordinates(0:99) and visibility(99:132) and angles(132:161) and label(161:162)
                 data = np.array(data)
