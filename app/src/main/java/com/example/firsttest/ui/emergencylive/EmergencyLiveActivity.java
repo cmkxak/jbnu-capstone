@@ -1,30 +1,28 @@
-package com.example.firsttest;
+package com.example.firsttest.ui.emergencylive;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.SslErrorHandler;
+import android.view.View;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.firsttest.Main2Activity;
 import com.example.firsttest.databinding.ActivityEmergencyLiveBinding;
-
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class EmergencyLiveActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityEmergencyLiveBinding binding;
     private WebSettings webSettings;
+    private final String TAG = "MyFirebaseMsgService";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +34,22 @@ public class EmergencyLiveActivity extends AppCompatActivity {
 
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
 //        webSettings.setSupportZoom(false); // 화면 줌 허용 여부
 //        webSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
-
-        binding.liveStreaming.loadUrl("http://210.117.137.161:13390/");
-
+        binding.liveStreaming.loadUrl("211.117.125.107:12485");
 
         //convert to 119 dial.
+        binding.buttonBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 메인 액티비티로 이동
+//                Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
+//                startActivity(intent);
+            }
+        });
+
+        //간편 신고 기능
         binding.report.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyLiveActivity.this);
             builder.setTitle("신고");
@@ -57,28 +63,22 @@ public class EmergencyLiveActivity extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         });
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        String token = task.getResult();
+                        Log.d(TAG, "token : "+token);
+                    }
+                });
+
     }
-
 }
-
-
-//    public static String getLocalIpAddress() {
-//        try {
-//            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-//                NetworkInterface intf = en.nextElement();
-//                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-//                    InetAddress inetAddress = enumIpAddr.nextElement();
-//                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-//                        return inetAddress.getHostAddress();
-//                    }
-//                }
-//            }
-//        } catch (SocketException ex) {
-//            ex.printStackTrace();
-//        }
-//        return null;
-//    }
-
 
 
 
