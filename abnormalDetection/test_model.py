@@ -3,22 +3,20 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import os
+from collections import Counter
 from tensorflow.keras.models import load_model
 
-actions = ['normal', 'abnormal']
-seq_length = 15
+actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
+seq_length = 30
 
-model = load_model('models/modelV2_GRU_lying.h5')
-path = 'preprocessing'
-filePath = os.path.join(path, "FD_In_H11H21H31_0009_20201229_14.mp4_20220411_170822.mkv")
-print(filePath)
+model = load_model('models/modelV5.4_WINDOW=30.h5')
 
 # MediaPipe hands model
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(
-    min_detection_confidence=0.4,
-    min_tracking_confidence=0.4)
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6)
 
 # if os.path.isfile(filePath):
 #     cap = cv2.VideoCapture(filePath)
@@ -69,6 +67,7 @@ while cap.isOpened():
         angle = np.degrees(angle) # Convert radian to degree
 
         d = np.concatenate([joint.flatten(), angle])
+        # d = joint.flatten()
 
         seq.append(d)
 
@@ -82,28 +81,17 @@ while cap.isOpened():
         y_pred = model.predict(input_data).squeeze()
 
         i_pred = int(np.argmax(y_pred))
-        # conf = y_pred[i_pred]
-
-        # if conf < 0.9:
-        #     continue
-        # if i_pred != 0 and i_pred != 1 and i_pred != 2:
-        #     print(i_pred)
 
         action = actions[i_pred]
         action_queue.append(action)
 
-        if len(action_queue) < 10:
+        if len(action_queue) < 16:
             continue
         
         action_queue.pop(0)
-        this_action = "normal"
-        cnt = 0
-        for act in action_queue:
-            if act == "abnormal":
-                cnt += 1
-        
-        if cnt > 4:
-            this_action = "abnormal"
+
+        action_counter = Counter(action_queue)
+        this_action = action_counter.most_common().pop(0)[0] # one action has the most value.
 
         cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255, 255, 255), thickness=2)
 
