@@ -1,16 +1,17 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import os
 from threading import Thread
 from collections import Counter
-from tensorflow.python.keras.models import load_model
+from tensorflow.keras.models import load_model
 from fcm_push import FcmNotification
-from video_stream import VideoStream
 
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
 model = load_model('models/modelV5.7_WINDOW=30.h5')
+filePath = "C:/Users/sang9/OneDrive/바탕 화면/6-6_033-C03.mp4"
 
 # MediaPipe hands model
 mp_pose = mp.solutions.pose
@@ -19,70 +20,19 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6)
 
-# if os.path.isfile(filePath):
-#     cap = cv2.VideoCapture(filePath)
-# else:
-#     print("file is not exist")
+if os.path.isfile(filePath):
+    cap = cv2.VideoCapture(filePath)
+else:
+    print("file is not exist")
 # cap = cv2.VideoCapture("http://211.117.125.107:12485/") #webcam capture
-stream_link = "http://211.117.125.107:12485/"
-
-class VideoStreamWidget(object):
-    def __init__(self, src=0):
-        # Create a VideoCapture object
-        self.capture = cv2.VideoCapture(src)
-        self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 2)
-
-        # Start the thread to read frames from the video stream
-        self.thread = Thread(target=self.update, args=())
-        self.thread.daemon = True
-        self.thread.start()
-
-    def update(self):
-        # Read the next frame from the stream in a different thread
-        while True:
-            if self.capture.isOpened():
-                (self.status, self.frame) = self.capture.read()
-                return self.status, self.frame
-
-    def show_frame(self):
-        # Display frames in main program
-        if self.status:
-            self.frame = self.maintain_aspect_ratio_resize(self.frame, width=None)
-            cv2.imshow('IP Camera Video Streaming', self.frame)
-
-    # Resizes a image and maintains aspect ratio
-    def maintain_aspect_ratio_resize(self, image, width=None, height=None, inter=cv2.INTER_AREA):
-        # Grab the image size and initialize dimensions
-        dim = None
-        (h, w) = image.shape[:2]
-
-        # Return original image if no need to resize
-        if width is None and height is None:
-            return image
-
-        # We are resizing height if width is none
-        if width is None:
-            # Calculate the ratio of the height and construct the dimensions
-            r = height / float(h)
-            dim = (int(w * r), height)
-        # We are resizing width if height is none
-        else:
-            # Calculate the ratio of the 0idth and construct the dimensions
-            r = width / float(w)
-            dim = (width, int(h * r))
-
-        # Return the resized image
-        return cv2.resize(image, dim, interpolation=inter)
-
-video_stream_widget = VideoStreamWidget(stream_link)
 
 # frame size convert to int_type
-# frameWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-# frameHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-# frameRate = int(cap.get(cv2.CAP_PROP_FPS))
-# delay = round(1000/frameRate)
-# fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-# out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight)) # initialize writer to save video
+frameWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frameHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+frameRate = int(cap.get(cv2.CAP_PROP_FPS))
+delay = round(1000/frameRate)
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight)) # initialize writer to save video
 
 seq = []
 action_queue = []
@@ -90,13 +40,12 @@ pre_action = ""
 fcmNotification = FcmNotification()
 fcmNotification.updateToken()
 
-while video_stream_widget.capture.isOpened():
-    ret, img = video_stream_widget.update()
-    # img = video_stream_widget.maintain_aspect_ratio_resize(img)
+while cap.isOpened():
+    ret, img = cap.read()
     if not(ret):
         break
 
-    # img = cv2.flip(img, 1)
+    img = cv2.flip(img, 1)
     # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     result = pose.process(img)
     # img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
@@ -162,22 +111,17 @@ while video_stream_widget.capture.isOpened():
             cv2.putText(img, f'{this_action.upper()}', org=(int(result.pose_landmarks.landmark[0].x * img.shape[1]), int(result.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
         else:
             continue
-
+        
         pre_action = this_action
 
-    # out.write(img) #save video
-    cv2.namedWindow('Abnormal Detection', flags=cv2.WINDOW_NORMAL)
-    cv2.imshow('Abnormal Detection', img)
+    out.write(img) #save video
+    cv2.namedWindow('img', flags=cv2.WINDOW_NORMAL)
+    cv2.imshow('img', img)
+    if cv2.waitKey(1) == 27:
+        break
 
-    # Press Q on keyboard to stop recording
-    key = cv2.waitKey(1)
-    if key == ord('q'):
-        video_stream_widget.capture.release()
-        cv2.destroyAllWindows()
-        exit(1)
-
-if video_stream_widget.capture.isClosed():
-    video_stream_widget.capture.release()
+if cap.isClosed():
+    cap.release()
 
 cv2.destroyAllWindows()
 exit(1)

@@ -4,10 +4,10 @@ import numpy as np
 import time, os #시간 호출
 #error is at last
 actions = ['error', 'suffer', 'falling', 'lying', 'sitting', 'walking', 'standing', 'lain', 'jump']
-idx = 2
+idx = 6
 seq_length = 30
 
-folderPath = "C:/Users/sang9/OneDrive/바탕 화면/aihub/" + actions[idx] + "/108-151(20)"
+folderPath = "C:/Users/sang9/OneDrive/바탕 화면/preprocessing/" + actions[idx]
 
 #MediaPipe pose model
 mp_pose = mp.solutions.pose
@@ -45,9 +45,9 @@ for (root, directories, files) in os.walk(folderPath):
                         break
 
                     cnt += 1
-                    if cnt < 43 or cnt > 97: # Frame Skipped
-                        continue
-                    if cnt%5 < 2: # 30Frame to 18Frame
+                    # if cnt < 43 or cnt > 97: # Frame Skipped
+                    #     continue
+                    if cnt%2 < 1: # 30Frame to 15Frame
                         continue
 
                     img = cv2.flip(img, 1)
