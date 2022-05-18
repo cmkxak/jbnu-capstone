@@ -1,4 +1,4 @@
-import cv2
+import cv2, time
 from threading import Thread
 
 class VideoStream(object):
