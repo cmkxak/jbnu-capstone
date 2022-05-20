@@ -16,8 +16,8 @@ model = load_model('models/modelV5.7_WINDOW=30.h5')
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(
-    min_detection_confidence=0.4,
-    min_tracking_confidence=0.4)
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6)
 
 stream_link = "http://211.117.125.107:12485/"
 
