@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String password = jsonResponse.getString("password");
                                 // 로그인 하면서 사용자 정보 넘기기
                                 intent.putExtra("id", id);
-//                                startActivity(intent);
+                           //     startActivity(intent);
                                 new BackgroundTask().execute();
 
                             } else {
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-     //   setSupportActionBar(binding.toolbar);
+    //   setSupportActionBar(binding.toolbar);
 
 //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 //        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();

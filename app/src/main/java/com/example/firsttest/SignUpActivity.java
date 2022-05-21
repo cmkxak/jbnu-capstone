@@ -35,6 +35,13 @@ public class SignUpActivity extends AppCompatActivity {
         binding.imageInvalid.setVisibility(View.INVISIBLE);
         canRegister = false;
 
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+            }
+        });
         binding.signupID.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

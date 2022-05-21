@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firsttest.databinding.ActivityUserListBinding;
+import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserListActivity extends AppCompatActivity {
-
 
     private ListView listView;
     private UserListAdapter adapter;
@@ -42,6 +42,7 @@ public class UserListActivity extends AppCompatActivity {
                 User user = userList.get(i);
                 Toast.makeText(UserListActivity.this, user.getUserAge(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(UserListActivity.this, EmergencyLiveActivity.class);
+ //               intent.putExtra(id);
                 startActivity(intent);
             }
         });
@@ -90,11 +91,7 @@ public class UserListActivity extends AppCompatActivity {
                 // 로그인 하면서 사용자 정보 넘기기
                 intent.putExtra("id", id);
                 startActivity(intent);
-
             }
         });
-
-
     }
-
 }
