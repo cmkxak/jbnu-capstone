@@ -23,6 +23,14 @@ stream_link = "http://211.117.125.107:12485/"
 
 videoStream = VideoStream(stream_link)
 
+# frame size convert to int_type
+frameWidth = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+frameHeight = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+frameRate = int(videoStream.capture.get(cv2.CAP_PROP_FPS))
+delay = round(1000/frameRate)
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight))
+
 seq = []
 action_queue = []
 pre_action = ""
@@ -37,12 +45,12 @@ while videoStream.capture.isOpened():
 
         # img = cv2.flip(img, 1)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        result = pose.process(img)
+        res = pose.process(img)
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-        if result.pose_landmarks is not None:
+        if res.pose_landmarks is not None:
             # for res in result.multi_hand_landmarks:
-            res = result
+
             joint = np.zeros((33, 4))
             for j, lm in enumerate(res.pose_landmarks.landmark):
                 joint[j] = [lm.x, lm.y, lm.z, lm.visibility]
@@ -62,7 +70,6 @@ while videoStream.capture.isOpened():
             angle = np.degrees(angle) # Convert radian to degree
 
             d = np.concatenate([joint.flatten(), angle])
-            # d = joint.flatten()
 
             seq.append(d)
 
@@ -98,7 +105,7 @@ while videoStream.capture.isOpened():
             elif this_action == "unknown":
                 cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
             elif this_action is not None:
-                cv2.putText(img, f'{this_action.upper()}', org=(int(result.pose_landmarks.landmark[0].x * img.shape[1]), int(result.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
+                cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
             else:
                 continue
 
@@ -106,6 +113,7 @@ while videoStream.capture.isOpened():
 
         img = videoStream.maintain_aspect_ratio_resize(img, width=None)
 
+        # out.write(img) #save video
         cv2.namedWindow('Abnormal Detection', flags=cv2.WINDOW_NORMAL)
         cv2.imshow('Abnormal Detection', img)
     except AttributeError:
