@@ -39,13 +39,13 @@ public class EmergencyLiveActivity extends AppCompatActivity {
 //        webSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
         binding.liveStreaming.loadUrl("211.117.125.107:12485");
 
-        //convert to 119 dial.
-        binding.buttonBackButton.setOnClickListener(new View.OnClickListener() {
+        //뒤로가기 버튼 클릭
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 액티비티로 이동
-//                Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
-//                startActivity(intent);
+                //메인 액티비티로 이동
+                Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
+                startActivity(intent);
             }
         });
 
