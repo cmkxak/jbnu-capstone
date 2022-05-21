@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.FirstTest"
         android:usesCleartextTraffic="true">
         <activity
@@ -24,6 +25,10 @@
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.FirstTest.NoActionBar" />
+=======
+        android:theme="@style/Theme.FirstTest">
+
+>>>>>>> c9fb30d265b3e0ce2a4b5c6b88910a8a0174a087
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
@@ -39,11 +44,27 @@
             android:theme="@style/Theme.FirstTest.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmergencyLiveActivity" />
+
+        <activity android:name=".ui.emergencylive.EmergencyLiveActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FirstTest.NoActionBar"
+        />
+
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
     </application>
 
 </manifest>
