@@ -1,8 +1,5 @@
 package com.example.firsttest;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,11 +8,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.firsttest.SignUpRequest;
-import com.example.firsttest.ValidateRequest;
 import com.example.firsttest.databinding.ActivitySignUpBinding;
 
 import org.json.JSONObject;
@@ -32,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         queue = Volley.newRequestQueue(SignUpActivity.this);
+
         binding.imageValid.setVisibility(View.INVISIBLE);
         binding.imageInvalid.setVisibility(View.INVISIBLE);
         canRegister = false;
@@ -39,7 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
         binding.signupID.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -66,8 +64,12 @@ public class SignUpActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
                     }
                 };
+                String id = charSequence.toString();
+                ValidateRequest validateRequest = new ValidateRequest(id, responseListener);
+                queue.add(validateRequest);
             }
 
             @Override
@@ -94,12 +96,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();//액티비티를 종료시킴(회원등록 창을 닫음)
-
                             } else {// 회원가입이 안된다면
                                 Toast.makeText(getApplicationContext(), "회원가입에 실패했습니다. 다시 한 번 확인해 주세요.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                        } catch (Exception e) {
+                        }catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

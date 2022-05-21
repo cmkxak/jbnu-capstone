@@ -3,23 +3,13 @@ package com.example.firsttest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.firsttest.databinding.ActivityEmergencyLiveBinding;
-
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
 
 public class EmergencyLiveActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
@@ -40,8 +30,7 @@ public class EmergencyLiveActivity extends AppCompatActivity {
 //        webSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
 
-        binding.liveStreaming.loadUrl("http://210.117.137.161:13390/");
-
+        binding.liveStreaming.loadUrl("http://211.117.125.107:12485/");
 
         //convert to 119 dial.
         binding.report.setOnClickListener(v -> {
