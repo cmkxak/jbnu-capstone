@@ -45,7 +45,11 @@ public class EmergencyLiveActivity extends AppCompatActivity {
         //4. 중범이가 메인서버에 문의를 보냄 -> 얘 아이디 나한테 접근하려는데 이거 맞음?
         //5. ㅇㅇ 맞음 들여보내주셈
         //6. ㅇㅋㅇㅋ 들어오셈
-        binding.liveStreaming.loadUrl("211.117.125.107:12485");
+
+        Intent intent = getIntent();
+        String userIP = intent.getStringExtra("userIP");
+        String userPhoneNumber = intent.getStringExtra("userPhoneNumber");
+        binding.liveStreaming.loadUrl(userIP+":9090/?"+"userPhoneNumber=" + userPhoneNumber);
 
 //        String id = getIntent(id);
 //        String ip_port = "210.117.128.200:12386/getSeniorIp.php";
@@ -67,8 +71,8 @@ public class EmergencyLiveActivity extends AppCompatActivity {
             builder.setTitle("신고");
             builder.setMessage("신고하시겠습니까?");
             builder.setPositiveButton("네", (dialogInterface, i) -> {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:119"));
-                startActivity(intent);
+                Intent intent2 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:119"));
+                startActivity(intent2);
             });
             builder.setNegativeButton("아니오", (dialogInterface, i) -> {
             });

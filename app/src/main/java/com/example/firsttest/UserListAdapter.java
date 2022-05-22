@@ -34,14 +34,16 @@ public class UserListAdapter extends BaseAdapter {
         View v = View.inflate(context, R.layout.user, null);
 
         //뷰에 다음 컴포넌트들을 연결시켜줌
-        TextView userID = (TextView)v.findViewById(R.id.userID);
+    //    TextView userID = (TextView)v.findViewById(R.id.userID);
         TextView userAge = (TextView)v.findViewById(R.id.userAge);
         TextView userName = (TextView)v.findViewById(R.id.userName);
-        TextView userPhonenumber = (TextView)v.findViewById(R.id.userPhonenumber);
+        TextView userPhoneNumber = (TextView)v.findViewById(R.id.userPhonenumber);
+        TextView userIP = (TextView)v.findViewById(R.id.userIP);
 
         userName.setText(userList.get(i).getUserName());
         userAge.setText(userList.get(i).getUserAge());
-        userPhonenumber.setText(userList.get(i).getUserPhonenumber());
+        userPhoneNumber.setText(userList.get(i).getUserPhoneNumber());
+        userIP.setText(userList.get(i).getUserIP());
         //이렇게하면 findViewWithTag를 쓸 수 있음 없어도 되는 문장임
 
         //만든뷰를 반환함

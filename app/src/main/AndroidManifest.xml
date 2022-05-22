@@ -37,6 +37,10 @@
         <activity
             android:name=".UserListActivity"
             android:exported="false" />
+        <!--> 유저리스트 화면 <!-->
+        <activity
+            android:name=".AddSignUpActivity"
+            android:exported="false" />
 
         <!--> 실시간 모니터링 화면 및 응급 화면 <!-->
         <activity android:name=".ui.emergencylive.EmergencyLiveActivity"

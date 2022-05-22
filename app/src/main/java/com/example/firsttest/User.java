@@ -1,27 +1,30 @@
 package com.example.firsttest;
 
 public class User {
-    String userID;
     String userAge;
     String userName;
-    String userPhonenumber;
+    String userPhoneNumber;
+    String userIP;
 
-    public User(String userAge, String userName, String userPhonenumber) {
+    public User(String userName, String userAge, String userPhoneNumber, String userIP) {
         this.userAge = userAge;
         this.userName = userName;
-        this.userPhonenumber = userPhonenumber;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userIP = userIP;
     }
 
-    public String getUserAge() {
-        return userAge;
-    }
+    public String getUserAge() { return userAge; }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getUserPhonenumber() {
-        return userPhonenumber;
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public String getUserIP() {
+        return userIP;
     }
 
     public void setUserAge(String userAge) {
@@ -32,7 +35,11 @@ public class User {
         this.userName = userName;
     }
 
-    public void setUserPhonenumber(String userPhonenumber) { this.userPhonenumber = userPhonenumber; }
+    public void setUserPhoneNumber(String userPhoneNumber) { this.userPhoneNumber = userPhoneNumber; }
+
+    public void setUserIP(String userIP) {
+        this.userIP = userIP;
+    }
 
 }
 

@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         intent = new Intent(LoginActivity.this, UserListActivity.class);
+
         binding.signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
