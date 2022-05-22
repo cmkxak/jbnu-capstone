@@ -14,14 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstTest">
 
+        <!--> 회원가입 화면 <!-->
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Main2Activity"
             android:exported="false"
-            android:label="@string/title_activity_main2"
             android:theme="@style/Theme.FirstTest.NoActionBar" />
+        <!--> 메인 화면 <!-->
+
+        <!--> 로그인(메인) 화면 <!-->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -33,11 +33,27 @@
             </intent-filter>
         </activity>
 
+        <!--> 유저리스트 화면 <!-->
+        <activity
+            android:name=".UserListActivity"
+            android:exported="false" />
+        <!--> 유저리스트 화면 <!-->
+        <activity
+            android:name=".AddSignUpActivity"
+            android:exported="false" />
+
+        <!--> 실시간 모니터링 화면 및 응급 화면 <!-->
         <activity android:name=".ui.emergencylive.EmergencyLiveActivity"
             android:exported="true"
             android:theme="@style/Theme.FirstTest.NoActionBar"
-        />
+            />
 
+        <!--> 환경 설정 화면 <!-->
+<!--        <activity-->
+<!--            android:name=".ui.setting.MySettingActivity"-->
+<!--            android:theme="@style/Theme.FirstTest.NoActionBar" />-->
+
+        <!--> FCM SERVICE <!-->
         <service
             android:name=".service.MyFirebaseMessagingService"
             android:exported="false">
@@ -45,11 +61,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
+        <!--> Notification channel id for FCM SERVICE <!-->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-
     </application>
-
 </manifest>
