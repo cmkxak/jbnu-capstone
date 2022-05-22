@@ -45,7 +45,7 @@ public class EmergencyLiveActivity extends AppCompatActivity {
         //4. 중범이가 메인서버에 문의를 보냄 -> 얘 아이디 나한테 접근하려는데 이거 맞음?
         //5. ㅇㅇ 맞음 들여보내주셈
         //6. ㅇㅋㅇㅋ 들어오셈
-        binding.liveStreaming.loadUrl("211.117.125.107:12485");
+        binding.liveStreaming.loadUrl("211.117.125.107:12485/");
 
 //        String id = getIntent(id);
 //        String ip_port = "210.117.128.200:12386/getSeniorIp.php";
@@ -75,19 +75,6 @@ public class EmergencyLiveActivity extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         });
-
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-                        String token = task.getResult();
-                        Log.d(TAG, "token : "+token);
-                    }
-                });
 
     }
 }

@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -15,14 +17,19 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.firsttest.databinding.ActivitySignUpBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
 public class SignUpActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivitySignUpBinding binding;
+    private final String TAG = "MyFirebaseMsgService";
     RequestQueue queue;
     boolean canRegister;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 };
                 if(password.equals(confirm_password) && canRegister) {
-                    SignUpRequest signupRequest = new SignUpRequest(id, password, responseListener);
+                    SignUpRequest signupRequest = new SignUpRequest(id, password, token, responseListener);
                     queue.add(signupRequest);
                 }
                 else if(!password.equals(confirm_password)){
@@ -124,5 +131,19 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //애플리케이션의 토큰 얻어오기
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        token = task.getResult();
+                        Log.d(TAG, "token : "+ token);
+                    }
+                });
     }
 }
