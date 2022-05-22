@@ -8,23 +8,23 @@ class UserDAO():
         self.conn = self.database_connection.getConnection()
         self.cursor = self.conn.cursor()
 
-        self.cursor.execute("SELECT * FROM user WHERE userID = ?", (123,))
+        self.cursor.execute("SELECT * FROM subproducts WHERE id = ?", (123,))
 
         for (userName, userAge) in self.cursor:
             print(f"userName: {userName}, userAge: {userAge}")
         
         self.conn.close()
 
-    def getToken(self, id):
+    def getToken(self, userid):
         self.conn = self.database_connection.getConnection()
         self.cursor = self.conn.cursor()
 
-        self.cursor.execute("SELECT * FROM user WHERE userID = ?", (id,))
+        self.cursor.execute("SELECT * FROM products WHERE id = ?", (userid,))
 
-        # for (userID, userName, userAge, token) in self.cursor:
-        #     userToken = token
+        for (id, password, token) in self.cursor:
+            userToken = token
 
-        userToken = self.cursor.fetchone()[3]
+        # userToken = self.cursor.fetchone()[3]
 
         self.conn.close()
 

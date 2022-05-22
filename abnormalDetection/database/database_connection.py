@@ -9,11 +9,11 @@ class DatabaseConnection(object):
     def getConnection(self):
         try:
             self.conn = mariadb.connect(
-                user="capstone",
-                password="1234",
-                host="localhost",
+                user="Software",
+                password="software",
+                host="210.117.128.200",
                 port=3306,
-                database="capstone"
+                database="userInfo"
             )
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
