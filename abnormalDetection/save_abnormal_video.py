@@ -9,7 +9,7 @@ class SaveAbnormalVideo():
         self.frameWidth = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.frameHeight = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
         self.frameRate = int(videoStream.capture.get(cv2.CAP_PROP_FPS))
-        self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        self.fourcc = cv2.VideoWriter_fourcc(*'DIVX')
         
 
     def set_img_queue(self, img_queue):
@@ -17,7 +17,7 @@ class SaveAbnormalVideo():
 
     def save_abnormal_video(self):
         self.thread = Thread(target=self.save_video, args=())
-        self.out = cv2.VideoWriter(os.path.join('abnormalVideo', f'{int(time.time())}.mp4'), self.fourcc, self.frameRate, (self.frameWidth, self.frameHeight))
+        self.out = cv2.VideoWriter(os.path.join('abnormalVideo', f'{int(time.time())}.avi'), self.fourcc, self.frameRate, (self.frameWidth, self.frameHeight))
         self.thread.start()
 
     def save_video(self):
