@@ -7,6 +7,7 @@ from fcm_push import FcmNotification
 from video_stream import VideoStream
 from save_abnormal_video import SaveAbnormalVideo
 
+userid = "sang981113"
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
@@ -20,17 +21,16 @@ pose = mp_pose.Pose(
     min_tracking_confidence=0.6)
 
 stream_link = "http://211.117.125.107:12485/"
-stream_link = "C:/Users/sang9/OneDrive/바탕 화면/6-6_033-C03.mp4"
 
-videoStream = VideoStream(stream_link)
-saveAbnormalVideo = SaveAbnormalVideo(videoStream)
+videoStream = VideoStream(0)
+saveAbnormalVideo = SaveAbnormalVideo(stream_link)
 
 seq = []
 action_queue = []
 img_queue = []
 pre_action = ""
 fcmNotification = FcmNotification()
-fcmNotification.updateToken("sang981113")
+fcmNotification.updateToken(userid)
 
 while videoStream.capture.isOpened():
     try:
@@ -126,6 +126,3 @@ while videoStream.capture.isOpened():
     if key == ord('q'):
         videoStream.capture.release()
         cv2.destroyAllWindows()
-        exit(1)
-
-cv2.destroyAllWindows()

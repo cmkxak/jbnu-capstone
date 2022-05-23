@@ -17,7 +17,6 @@ class VideoStream(object):
         while True:
             if self.capture.isOpened():
                 (self.status, self.frame) = self.capture.read()
-            time.sleep(1/60)
 
     def get_frame(self):
         # Display frames in main program
