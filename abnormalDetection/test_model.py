@@ -23,7 +23,7 @@ pose = mp_pose.Pose(
 stream_link = "http://211.117.125.107:12485/"
 
 videoStream = VideoStream(0)
-saveAbnormalVideo = SaveAbnormalVideo(stream_link)
+saveAbnormalVideo = SaveAbnormalVideo(videoStream)
 
 seq = []
 action_queue = []
