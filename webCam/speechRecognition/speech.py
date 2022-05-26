@@ -1,18 +1,18 @@
 import speech_recognition as sr 
-from pyfcm import FCMNotification
+# from pyfcm import FCMNotification
 
-APIKEY = "AAAAPe8PBM4:APA91bHh9s_Dur9z4LOveWHhZwSo3I7BWAfqRrbew5reQn_IbipupXiiy-Nx1Jmdc72CODxXNzlNZchkY2S8uEpSg-CwlmxX7fIcGZ9yAOuCtdsaeqPaSztjC0DwXI4qzk8LLtKsw0fX"
-TOKEN = "cQ1aDc0STRC5rKlWp66F3T:APA91bEVPoyT0G1OXevLAmgxS38wFZoI8LISoHq3yK42rXIMVJjOssjHKqxWBwn7lHx6nLTxJLXr-As7f7lUIo4UlGU3xI7MhzLrNua8XuhBYT59uOqDSO8t6IGWR9Phl_-qJz2tVb6M"
-push_service = FCMNotification(APIKEY)
+# APIKEY = "AAAAPe8PBM4:APA91bHh9s_Dur9z4LOveWHhZwSo3I7BWAfqRrbew5reQn_IbipupXiiy-Nx1Jmdc72CODxXNzlNZchkY2S8uEpSg-CwlmxX7fIcGZ9yAOuCtdsaeqPaSztjC0DwXI4qzk8LLtKsw0fX"
+# TOKEN = "cQ1aDc0STRC5rKlWp66F3T:APA91bEVPoyT0G1OXevLAmgxS38wFZoI8LISoHq3yK42rXIMVJjOssjHKqxWBwn7lHx6nLTxJLXr-As7f7lUIo4UlGU3xI7MhzLrNua8XuhBYT59uOqDSO8t6IGWR9Phl_-qJz2tVb6M"
+# push_service = FCMNotification(APIKEY)
 
-def sendMessage(message: str):
-    data_message = {
-        "body" : message
-    }
+# def sendMessage(message: str):
+#     data_message = {
+#         "body" : message
+#     }
 
-    result = push_service.single_device_data_message(registration_id = TOKEN, data_message = data_message)
+#     result = push_service.single_device_data_message(registration_id = TOKEN, data_message = data_message)
 
-    print(result)
+#     print(result)
 
 r = sr.Recognizer() #Recognizer 사용
 mic = sr.Microphone() #Mic 선언

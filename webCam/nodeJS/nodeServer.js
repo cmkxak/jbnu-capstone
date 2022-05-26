@@ -18,7 +18,7 @@ function getTest(req, res){
     let id = req.query.id;
 
     const option = {
-        url : "http://210.117.128.200:8080/SeniorValidate",
+        url : "지민이 서버 ip/SeniorValidate",
         qs:{
             id : id
         }
@@ -29,7 +29,7 @@ function getTest(req, res){
         const checkAccess = html.trim();
 
         if(checkAccess === 'true'){
-            res.redirect("http://211.117.125.107:34526/");
+            res.redirect("카메라 서버 ip");
         }
         else{
             res.status(404).render('errorPage.html');
