@@ -55,7 +55,7 @@
 
 
         <!--> 환경 설정에서의 독거노인 정보 변경 화면 <!-->
-        <activity android:name=".ModifyUserInfoActivity"
+        <activity android:name=".SettingUserListActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"/>
 

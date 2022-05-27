@@ -13,7 +13,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.example.firsttest.ModifyUserInfoActivity;
+import com.example.firsttest.SettingUserListActivity;
 import com.example.firsttest.R;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -32,7 +32,7 @@ public class MySettingFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 String userId = prefs.getString("id", " ");
-                Intent intent = new Intent(getActivity(), ModifyUserInfoActivity.class);
+                Intent intent = new Intent(getActivity(), SettingUserListActivity.class);
                 intent.putExtra("id", userId);
                 startActivity(intent);
                 return true;

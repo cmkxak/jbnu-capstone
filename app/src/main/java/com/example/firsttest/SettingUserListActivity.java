@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModifyUserInfoActivity extends AppCompatActivity{
+public class SettingUserListActivity extends AppCompatActivity{
 
         private ListView listView;
         private UserListAdapter adapter;
@@ -44,7 +44,7 @@ public class ModifyUserInfoActivity extends AppCompatActivity{
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = userList.get(i);
-                Intent intent = new Intent(ModifyUserInfoActivity.this, WriteUserInfoActivity.class);
+                Intent intent = new Intent(SettingUserListActivity.this, WriteUserInfoActivity.class);
                     String userName = user.getUserName();
                     String userAge = user.getUserAge();
                     String userPhoneNumber = user.getUserPhoneNumber();
