@@ -10,8 +10,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
-
-import com.example.firsttest.databinding.ActivityModifyInformationBinding;
+import com.example.firsttest.databinding.ActivitySettingUserlistBinding;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,14 +23,14 @@ public class SettingUserListActivity extends AppCompatActivity{
         private ListView listView;
         private UserListAdapter adapter;
         private List<User> userList;
-        private ActivityModifyInformationBinding binding;
+        private ActivitySettingUserlistBinding binding;
         private SharedPreferences pref;
         private Intent intent;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            binding = ActivityModifyInformationBinding.inflate(getLayoutInflater());
+            binding = ActivitySettingUserlistBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
 
             intent = getIntent();
