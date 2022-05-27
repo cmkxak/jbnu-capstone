@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="left"
     tools:context=".UserListActivity">
 
-    <Button
-        android:id="@+id/button2"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+    <ImageView
+        android:id="@+id/setting"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:adjustViewBounds="true"
+
+
+        android:src="@drawable/ic_menu_setting"
+        android:layout_marginTop="5dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-    />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:background="#d1d1d1"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="left"
+        android:layout_marginLeft="15dp">
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:divider="#d1d1d1"
-            android:dividerHeight="10dp"></ListView>
-    </LinearLayout>
-
-    <TextView
+        <TextView
         android:id="@+id/userListTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="25sp"
+        android:text="TextView님"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp" />
 
+        <TextView
+            android:id="@+id/justTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="안녕하세요!"
+            android:textStyle="bold"
+             />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    출처: https://gakari.tistory.com/entry/안드로이드-프로젝트6-회원목록을-리스트뷰로-출력하기 [가카리의 공부방]
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/listText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="돌붐중인 리스트"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        />
+
+    <include
+        android:id="@+id/userList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/user_list"/>
+
+    <!--    출처: https://gakari.tistory.com/entry/안드로이드-프로젝트6-회원목록을-리스트뷰로-출력하기 [가카리의 공부방]-->
+</androidx.appcompat.widget.LinearLayoutCompat>
