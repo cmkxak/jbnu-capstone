@@ -47,6 +47,7 @@ public class AddSignUpActivity extends AppCompatActivity {
                             if (success) { // 회원가입이 가능한다면
                                 Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(AddSignUpActivity.this, UserListActivity.class);
+                                intent.putExtra("id", id);
                                 startActivity(intent);
                                 finish();//액티비티를 종료시킴(회원등록 창을 닫음)
                             } else {// 회원가입이 안된다면

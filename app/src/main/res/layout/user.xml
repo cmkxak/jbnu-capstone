@@ -14,16 +14,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/userName"
         android:text="NAME"
-        android:textSize="20dp"
-        android:textColor="#f92a3f"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userAge"
         android:text="AGE"
-        android:textSize="16dp"
-        android:textColor="#a902f0"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
         />
 
     <TextView
@@ -31,16 +33,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/userPhonenumber"
         android:text="PHONE"
-        android:textSize="18dp"
-        android:textColor="#00a7f5"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
         />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userIP"
         android:text="IP"
-        android:textSize="18dp"
-        android:textColor="#00a7f5"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
         />
 
 </LinearLayout>

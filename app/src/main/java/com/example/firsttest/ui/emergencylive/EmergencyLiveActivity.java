@@ -2,6 +2,7 @@ package com.example.firsttest.ui.emergencylive;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.webkit.WebSettings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.preference.PreferenceManager;
 
 import com.example.firsttest.UserListActivity;
 import com.example.firsttest.databinding.ActivityEmergencyLiveBinding;
@@ -22,6 +24,7 @@ public class EmergencyLiveActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityEmergencyLiveBinding binding;
     private WebSettings webSettings;
+    SharedPreferences prefs;
     private final String TAG = "MyFirebaseMsgService";
 
     @Override
@@ -31,7 +34,6 @@ public class EmergencyLiveActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         webSettings = binding.liveStreaming.getSettings();
-
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
@@ -61,6 +63,9 @@ public class EmergencyLiveActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //메인 액티비티로 이동
                 Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+                prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String userId = prefs.getString("id", " ");
+                intent.putExtra("id", userId);
                 startActivity(intent);
             }
         });
