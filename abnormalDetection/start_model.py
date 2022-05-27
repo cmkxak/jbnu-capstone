@@ -1,13 +1,14 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import sys
 from collections import Counter
 from tensorflow.python.keras.models import load_model
 from fcm_push import FcmNotification
 from video_stream import VideoStream
 from save_abnormal_video import SaveAbnormalVideo
 
-userid = "sang981113"
+userid = sys.argv[1]
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
@@ -20,9 +21,9 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6)
 
-stream_link = "http://211.117.125.107:12485/"
+stream_link = "http://" + sys.argv[2] + "/?deeplearnig=capstone2022"
 
-videoStream = VideoStream(0)
+videoStream = VideoStream(stream_link)
 saveAbnormalVideo = SaveAbnormalVideo(videoStream)
 
 seq = []
