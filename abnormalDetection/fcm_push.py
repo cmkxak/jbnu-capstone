@@ -9,9 +9,8 @@ class FcmNotification:
         self.nth = 0
         self.userDAO = UserDAO()
     
-    def updateToken(self):
-        tmpToken = self.userDAO.getToken(123)
-        self.token = tmpToken
+    def updateToken(self, userid):
+        self.token = self.userDAO.getToken(userid)
 
     def sendMessage(self, state):
 

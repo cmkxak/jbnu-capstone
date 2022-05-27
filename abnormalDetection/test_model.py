@@ -1,12 +1,13 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-from threading import Thread
 from collections import Counter
 from tensorflow.python.keras.models import load_model
 from fcm_push import FcmNotification
 from video_stream import VideoStream
+from save_abnormal_video import SaveAbnormalVideo
 
+userid = "sang981113"
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
@@ -21,21 +22,15 @@ pose = mp_pose.Pose(
 
 stream_link = "http://211.117.125.107:12485/"
 
-videoStream = VideoStream(stream_link)
-
-# frame size convert to int_type
-frameWidth = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-frameHeight = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-frameRate = int(videoStream.capture.get(cv2.CAP_PROP_FPS))
-delay = round(1000/frameRate)
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter('output.mp4', fourcc, frameRate, (frameWidth, frameHeight))
+videoStream = VideoStream(0)
+saveAbnormalVideo = SaveAbnormalVideo(videoStream)
 
 seq = []
 action_queue = []
+img_queue = []
 pre_action = ""
 fcmNotification = FcmNotification()
-fcmNotification.updateToken()
+fcmNotification.updateToken(userid)
 
 while videoStream.capture.isOpened():
     try:
@@ -87,10 +82,10 @@ while videoStream.capture.isOpened():
             action = actions[i_pred]
             action_queue.append(action)
 
-            if len(action_queue) < 16:
+            if len(action_queue) <= 15:
                 continue
             
-            action_queue.pop(0)
+            del action_queue[0]
 
             action_counter = Counter(action_queue)
             most_action_tuple = action_counter.most_common().pop(0)
@@ -108,26 +103,26 @@ while videoStream.capture.isOpened():
                 cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
             else:
                 continue
+            
+            if pre_action == "fall" and this_action != "fall":
+                saveAbnormalVideo.set_img_queue(img_queue)
+                saveAbnormalVideo.save_abnormal_video()
 
             pre_action = this_action
 
-        img = videoStream.maintain_aspect_ratio_resize(img, width=None)
-
-        # out.write(img) #save video
         cv2.namedWindow('Abnormal Detection', flags=cv2.WINDOW_NORMAL)
         cv2.imshow('Abnormal Detection', img)
+
+        if len(img_queue) >= 150:
+            del img_queue[0]
+        img_queue.append(img)
     except AttributeError:
         pass
+    except TypeError:
+        break
 
     # Press Q on keyboard to stop recording
     key = cv2.waitKey(1)
     if key == ord('q'):
         videoStream.capture.release()
         cv2.destroyAllWindows()
-        exit(1)
-
-if videoStream.capture.isClosed():
-    videoStream.capture.release()
-
-cv2.destroyAllWindows()
-exit(1)
