@@ -44,11 +44,11 @@ for (root, directories, files) in os.walk(folderPath):
                     if ret != True:
                         break
 
-                    cnt += 1
+                    # cnt += 1
                     # if cnt < 43 or cnt > 97: # Frame Skipped
                     #     continue
-                    if cnt%2 < 1: # 30Frame to 15Frame
-                        continue
+                    # if cnt%2 < 1: # 30Frame to 15Frame
+                    #     continue
 
                     img = cv2.flip(img, 1)
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
