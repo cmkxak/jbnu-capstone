@@ -8,7 +8,8 @@ from fcm_push import FcmNotification
 from video_stream import VideoStream
 from save_abnormal_video import SaveAbnormalVideo
 
-userid = sys.argv[1]
+user_id = sys.argv[1]
+rasp_ip = sys.argv[2]
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
@@ -21,7 +22,7 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6)
 
-stream_link = "http://" + sys.argv[2] + "/?deeplearnig=capstone2022"
+stream_link = "http://" + rasp_ip + ":9090/?deeplearnig=capstone2022"
 
 videoStream = VideoStream(stream_link)
 saveAbnormalVideo = SaveAbnormalVideo(videoStream)
@@ -31,7 +32,7 @@ action_queue = []
 img_queue = []
 pre_action = ""
 fcmNotification = FcmNotification()
-fcmNotification.updateToken(userid)
+fcmNotification.updateToken(user_id)
 
 while videoStream.capture.isOpened():
     try:
