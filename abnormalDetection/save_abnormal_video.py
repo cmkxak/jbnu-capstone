@@ -9,9 +9,8 @@ class SaveAbnormalVideo():
         self.frameWidth = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.frameHeight = int(videoStream.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
         self.frameRate = int(videoStream.capture.get(cv2.CAP_PROP_FPS))
-        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        self.fourcc = cv2.VideoWriter_fourcc(*'avc1')
         
-
     def set_img_queue(self, img_queue):
         self.img_queue = img_queue
 

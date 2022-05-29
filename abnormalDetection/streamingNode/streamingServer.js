@@ -8,7 +8,7 @@ app.get('/', function(req, res) {
 })
  
 app.get('/video', function(req, res) {
-    const path = 'abnormalVideo/1653555616.mp4'
+    const path = 'abnormalVideo/1653828357.mp4'
     const stat = fs.statSync(path)
     const fileSize = stat.size
     const range = req.headers.range
