@@ -22,7 +22,8 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6)
 
-stream_link = "http://" + rasp_ip + ":9090/?deeplearnig=capstone2022"
+stream_link = "http://" + rasp_ip + ":9090/deeplearning/?deeplearning=capstone2022"
+print(user_id, stream_link)
 
 videoStream = VideoStream(stream_link)
 saveAbnormalVideo = SaveAbnormalVideo(videoStream)
