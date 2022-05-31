@@ -15,6 +15,6 @@
 local.properties
 abnormalDetection/dataset
 abnormalDetection/oldDataset
-abnormalDetection/streamingNode/abnormalVideo
+abnormalDetection/abnormalVideo
 abnormalDetection/__pycache__/
 abnormalDetection/database/__pycache__/

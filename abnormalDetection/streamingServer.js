@@ -2,6 +2,8 @@ const express = require('express')
 const fs = require('fs')
 const path = require('path')
 const app = express()
+const spawn = require('child_process').spawn
+const port = 5000
  
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
@@ -40,7 +42,17 @@ app.get('/video', function(req, res) {
         fs.createReadStream(path).pipe(res)
     }
 })
+
+app.get('/post/:user_id/:rasp_ip', (request, response) => {
+    if( !request.params.user_id && !request.params.rasp_ip ){
+        response.status(404).send('parameter error')
+    } else
+        result = spawn('python', ['start_model.py', request.params.user_id, request.params.rasp_ip])
+        result.stdout.on('data', function(data) {
+            console.log(data.toString());
+        });
+})
  
-app.listen(3000, function () {
-    console.log('App is running on port 3000')
+app.listen(port,  () => {
+    console.log(`App is running on port ${port}`)
 })

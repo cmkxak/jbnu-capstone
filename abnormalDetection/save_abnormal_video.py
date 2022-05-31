@@ -14,9 +14,10 @@ class SaveAbnormalVideo():
     def set_img_queue(self, img_queue):
         self.img_queue = img_queue
 
-    def save_abnormal_video(self):
+    def save_abnormal_video(self, user_id):
         self.thread = Thread(target=self.save_video, args=())
-        self.out = cv2.VideoWriter(os.path.join('streamingNode/abnormalVideo', f'{int(time.time())}.mp4'), self.fourcc, self.frameRate, (self.frameWidth, self.frameHeight))
+        os.makedirs('abnormalVideo/' + user_id, exist_ok=True)
+        self.out = cv2.VideoWriter(os.path.join('abnormalVideo/' + user_id, f'{int(time.time())}.mp4'), self.fourcc, self.frameRate, (self.frameWidth, self.frameHeight))
         self.thread.start()
 
     def save_video(self):
