@@ -1,7 +1,9 @@
 package com.example.firsttest.ui.setting;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -13,21 +15,30 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.firsttest.DeleteRequest;
+import com.example.firsttest.LoginActivity;
 import com.example.firsttest.SettingUserListActivity;
 import com.example.firsttest.R;
+import com.example.firsttest.service.MyFirebaseMessagingService;
+import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MySettingFragment extends PreferenceFragmentCompat {
     SharedPreferences prefs;
-    Preference mypref;
+    Preference pref_correctSeniorInfo;
+    Preference pref_deleteMember;
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
-
         setPreferencesFromResource(R.xml.user_preference, rootKey);
-        mypref = findPreference("correctSeniorInfo");
-        mypref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            //돌봄 리스트 정보 수정
+
+        pref_correctSeniorInfo = findPreference("correctSeniorInfo");
+        pref_correctSeniorInfo.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            //관리 대상 정보 수정 클릭 시
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -39,34 +50,27 @@ public class MySettingFragment extends PreferenceFragmentCompat {
             }
         });
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-
+        pref_deleteMember = findPreference("deleteMember");
+        pref_deleteMember.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            //회원 탈퇴 클릭 시
             @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("voiceNotifications")) {
-                    if (prefs.getBoolean("voiceNotifications", true)) {
-                        Toast.makeText(getActivity(), "음성인식 알림이 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                        //음성인식 켜지도록 동작
-                    } else {
-                        Toast.makeText(getActivity(), "음성인식 알림이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
-                        //음성인식 꺼지도록 동작
-                    }
-                }
-                if (key.equals("abnormalBehaviorDetection")) {
-                    if (prefs.getBoolean("abnormalBehaviorDetection", true)) {
-                        Toast.makeText(getActivity(), "이상행동 탐지 알림이 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                        //이상행동 탐지가 켜지도록 동작
-                        //FirebaseMessaging.getInstance().subscribeToTopic("users");
-                    } else {
-                        Toast.makeText(getActivity(), "이상행동 탐지 알림이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
-                        //이상행동 탐지가 꺼지도록 동작
-                        //FirebaseMessaging.getInstance().unsubscribeFromTopic("users");
-                    }
-                }
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("회원 탈퇴");
+                builder.setMessage("정말 탈퇴하시겠습니까?");
+                builder.setPositiveButton("네", (dialogInterface, i) -> {
+                    //회원 탈퇴 처리 후 로그인 화면으로 이동
+//                    queue = Volley.newRequestQueue(getActivity());
+//                    DeleteRequest request = new DeleteRequest(id);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                });
+                builder.setNegativeButton("아니오", (dialogInterface, i) -> {
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                return true;
             }
-        };
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
+        });
     }
 }
