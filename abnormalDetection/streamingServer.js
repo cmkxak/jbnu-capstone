@@ -2,6 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const path = require('path')
 const app = express()
+const url = require('url')
 const spawn = require('child_process').spawn
 const port = 5000
  
@@ -9,8 +10,9 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
 })
  
-app.get('/video', function(req, res) {
-    const path = 'abnormalVideo/1653828357.mp4'
+app.get('/*', function(req, res) {
+    const {pathname} = url.parse(req.url, true)
+    const path = `abnormalVideo/${pathname}`
     const stat = fs.statSync(path)
     const fileSize = stat.size
     const range = req.headers.range
