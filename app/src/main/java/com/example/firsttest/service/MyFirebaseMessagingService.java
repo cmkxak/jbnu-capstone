@@ -1,68 +1,89 @@
 package com.example.firsttest.service;
 
+import static java.lang.System.currentTimeMillis;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
+import com.example.firsttest.UserListActivity;
 import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
 import com.example.firsttest.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
     private static final String TAG = "MyFirebaseMsgService";
+    SharedPreferences prefs;
+    NotificationManager mManager;
 
-    //토큰을 서버로 전달
+    //토큰을 서버로 전달x
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
         Log.e(TAG, "onNewToken 호출됨 : " + token);
     }
 
-    //클라우드 서버가 안드로이드로 메시지를 보내면 자동 호출
+    //FCM으로 부터 푸시메시지 수신시 할 작업
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
-        String clickAction = remoteMessage.getData().get("click_action");
+        String userIP = remoteMessage.getData().get("ip");
+        String userPhoneNumber = remoteMessage.getData().get("phoneNumber");
 
-        if(remoteMessage.getNotification() != null || remoteMessage.getData().size()>0) {
-            Log.d(TAG, "onMessageReceived: 1");
-            Log.d(TAG, "title : " + title);
-            Log.d(TAG, "body : " + body);
-            sendNotification(title, body, clickAction);
+        if (remoteMessage != null && remoteMessage.getData().size() > 0) {
+            prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            boolean onVoiceNotification = prefs.getBoolean("voiceNotifications", false);
+            boolean onAbnormalDetectNotification = prefs.getBoolean("abnormalBehaviorDetection",false);
+
+            //알림 on/off 설정, default 알림은 true
+            if (onVoiceNotification || onAbnormalDetectNotification) {
+                sendNotification(title, body, userIP, userPhoneNumber);
+            } else {
+                mManager.deleteNotificationChannel(getString(R.string.default_notification_channel_id));
+            }
         }
     }
 
     //FCM에서 메시지를 받고 Notification을 띄워주는 것 구현
-    private void sendNotification(String title, String body, String clickAction) {
+    private void sendNotification(String title, String body, String userIP, String userPhoneNumber) {
         Intent intent = new Intent(this, EmergencyLiveActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        if(clickAction == ".EmergencyLiveActivity"){
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        }
-        //전달할 값 설정해주기
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+        intent.putExtra("userIP", userIP);
+        intent.putExtra("userPhoneNumber", userPhoneNumber);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)currentTimeMillis(), intent,
                 PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         final String CHANNEL_ID = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationManager mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -75,20 +96,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 ;
 
-        //채널 생성 (오레오 버전 이후에는 필요)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final String CHANNEL_NAME = "채널 이름";
-            final String CHANNEL_DESCRIPTION = "채널 ";
-            final int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            mChannel.setDescription(CHANNEL_DESCRIPTION);
-            mChannel.enableLights(true);
-            mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
-            mChannel.setSound(defaultSoundUri, null);
+                final String CHANNEL_NAME = "채널 이름";
+                final String CHANNEL_DESCRIPTION = "채널 ";
+                final int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+                mChannel.setDescription(CHANNEL_DESCRIPTION);
+                mChannel.enableLights(true);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+                mChannel.setSound(defaultSoundUri, null);
             mChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             mManager.createNotificationChannel(mChannel);
         }
-        mManager.notify(0, builder.build());
+        mManager.notify((int)currentTimeMillis(), builder.build()); //알람 id를 현재 시간 설정, 여러개의 알람 쌓이도록 함
     }
 }
