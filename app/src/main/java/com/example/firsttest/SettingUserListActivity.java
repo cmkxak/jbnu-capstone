@@ -7,10 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.firsttest.databinding.ActivitySettingUserlistBinding;
+import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,10 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingUserListActivity extends AppCompatActivity{
-
-        private ListView listView;
-        private UserListAdapter adapter;
-        private List<User> userList;
+        private RecyclerView recyclerView;
+        private UserAdapter userAdapter;
         private ActivitySettingUserlistBinding binding;
         private SharedPreferences pref;
         private Intent intent;
@@ -34,16 +36,21 @@ public class SettingUserListActivity extends AppCompatActivity{
             setContentView(binding.getRoot());
 
             intent = getIntent();
-            listView = (ListView)findViewById(R.id.listView);
-            userList = new ArrayList<User>();
-            adapter = new UserListAdapter(getApplicationContext(), userList);
-            listView.setAdapter(adapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            recyclerView = findViewById(R.id.recycler_view);
+
+            userAdapter = new UserAdapter();
+
+            recyclerView.setAdapter(userAdapter); //어댑터 연결
+
+            getuserInfo();
+
+            //click Event
+            userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                User user = userList.get(i);
-                Intent intent = new Intent(SettingUserListActivity.this, WriteUserInfoActivity.class);
+                public void onItemCLicked(View v, int pos) {
+                    User user = userAdapter.getUser(pos);
+                    Intent intent = new Intent(SettingUserListActivity.this, WriteUserInfoActivity.class);
                     String userName = user.getUserName();
                     String userAge = user.getUserAge();
                     String userPhoneNumber = user.getUserPhoneNumber();
@@ -51,11 +58,9 @@ public class SettingUserListActivity extends AppCompatActivity{
                     intent.putExtra("userName", userName);
                     intent.putExtra("userAge", userAge);
                     intent.putExtra("userPhoneNumber", userPhoneNumber);
-                startActivity(intent);
+                    startActivity(intent);
                 }
             });
-
-            getuserInfo();
 
         }
 
@@ -75,7 +80,6 @@ public class SettingUserListActivity extends AppCompatActivity{
 
             //userID = object.getString("userID");
             //JSON 배열 길이만큼 반복문을 실행
-            //if(userID.equals(id)) {
             while (count < jsonArray.length()) {
                 //count는 배열의 인덱스를 의미
                 JSONObject object = jsonArray.getJSONObject(count);
@@ -89,7 +93,9 @@ public class SettingUserListActivity extends AppCompatActivity{
 
                     //값들을 User클래스에 묶어줍니다
                     User user = new User(userName, userAge, userPhonenumber, userIP);
-                    userList.add(user);//리스트뷰에 값을 추가해줍니다
+                    userAdapter.addUser(user); //어댑터에서 추가되도록 함
+                    userAdapter.notifyDataSetChanged(); //데이터 변경을 앙ㄹ림
+                    recyclerView.startLayoutAnimation(); //애니메이션 효과
                     count++;
                 }
                 else count++;
