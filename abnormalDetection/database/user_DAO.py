@@ -4,14 +4,14 @@ class UserDAO():
     def __init__(self,):
         self.database_connection = DatabaseConnection()
 
-    def userSelect(self):
+    def userSelect(self, ip):
         self.conn = self.database_connection.getConnection()
         self.cursor = self.conn.cursor()
 
-        self.cursor.execute("SELECT * FROM subproducts WHERE id = ?", (123,))
+        self.cursor.execute("SELECT * FROM subproducts WHERE ip = ?", (ip,))
 
-        for (userName, userAge) in self.cursor:
-            print(f"userName: {userName}, userAge: {userAge}")
+        for (id, name, age, phone_number, ip) in self.cursor:
+            print(f"id: {id}, name: {name}, age: {age}, phone_number: {phone_number}, ip: {ip}")
         
         self.conn.close()
 
