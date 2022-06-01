@@ -15,26 +15,29 @@
             app:iconSpaceReserved="false"
             app:key="voiceNotifications"
             app:title="응급 음성 알림 끄기/켜기"
-            app:defaultValue="false"
+            android:defaultValue="true"
             android:summary="음성 감지 알림을 받을 수 있어요."/>
 
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             app:key="abnormalBehaviorDetection"
             app:title="이상 행동 탐지 알림 끄기/켜기"
-            app:defaultValue="false"
+            android:defaultValue="true"
             android:summary="이상행동 탐지 알림을 받을 수 있어요."/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="정보 등록/수정"
+    <PreferenceCategory android:title="정보 수정"
         app:iconSpaceReserved="false">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="correctSeniorInfo"
-            app:title="독거 노인 정보 수정"
+            app:title="관리 대상 정보 수정"
+            android:summary="관리 중인 어르신의 정보를 수정할 수 있어요."
             />
+
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="회원 관리"
@@ -43,7 +46,7 @@
         <Preference
             app:iconSpaceReserved="false"
             app:title="회원 탈퇴"
-            android:key="resignUser"
+            android:key="deleteMember"
             />
         />
     </PreferenceCategory>
