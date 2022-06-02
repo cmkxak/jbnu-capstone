@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_enter_age"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/view_modify_fragment"
+    tools:context=".WriteUserInfoActivity"
+    >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나이 입력"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginLeft="160dp"
+
+            />
+
+        <ImageView
+            android:id="@+id/btn_exitEnterUserAge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_menu_exit_button"
+            android:layout_marginRight="30dp"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_modify_userAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="나이를 입력하세요."
+        android:layout_gravity="center"
+        android:inputType="numberDecimal"
+        >
+
+        <requestFocus />
+    </androidx.appcompat.widget.AppCompatEditText>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

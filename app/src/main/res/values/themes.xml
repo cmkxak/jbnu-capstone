@@ -15,7 +15,6 @@
         <!-- Customize your theme here. -->
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/ic_application_icon</item>
 
-
     </style>
 
     <style name="Theme.FirstTest.NoActionBar">
@@ -23,6 +22,14 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/myStatusBarColor</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="Theme.FirstTest.Preference">
+        <item name= "android:textStyle">bold</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/myStatusBarColor</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="preferenceCategoryTitleTextColor">@color/primary</item>
     </style>
 
     <style name="Theme.FirstTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

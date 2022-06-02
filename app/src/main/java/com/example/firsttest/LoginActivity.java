@@ -1,13 +1,16 @@
 package com.example.firsttest;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.preference.PreferenceManager;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -55,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                                 String password = jsonResponse.getString("password");
                                 // 로그인 하면서 사용자 정보 넘기기
                                 intent.putExtra("id", id);
-                           //     startActivity(intent);
                                 new BackgroundTask().execute();
 
                             } else {
@@ -74,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.signUp.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
@@ -96,11 +97,11 @@ public class LoginActivity extends AppCompatActivity {
 
         protected String doInBackground(Void... voids) {
 
-            try{
+            try {
                 URL url = new URL(target);//URL 객체 생성
 
                 //URL을 이용해서 웹페이지에 연결하는 부분
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 //바이트단위 입력스트림 생성 소스는 httpURLConnection
                 InputStream inputStream = httpURLConnection.getInputStream();
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 StringBuilder stringBuilder = new StringBuilder();
 
                 //한줄씩 읽어서 stringBuilder에 저장함
-                while((temp = bufferedReader.readLine()) != null){
+                while ((temp = bufferedReader.readLine()) != null) {
                     stringBuilder.append(temp + "\n");//stringBuilder에 넣어줌
                 }
 
@@ -123,12 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();//trim은 앞뒤의 공백을 제거함
 
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
 
         }
+
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
@@ -137,53 +139,15 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            intent.putExtra("userList", result);//파싱한 값을 넘겨줌
-//            intent.putExtra("id", id);
+            //intent.putExtra("userList", result);//파싱한 값을 넘겨줌
+            //파싱 sharedpreference로 바꿔줌
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("userList", result);
+            Log.d("userList", result + "유저리스트 값 sharedPreference에 저장");
+            editor.commit();
             LoginActivity.this.startActivity(intent);//ManagementActivity로 넘어감
         }
 
     }
-    //   setSupportActionBar(binding.toolbar);
-
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-//        binding.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
 }
