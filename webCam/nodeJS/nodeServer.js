@@ -14,11 +14,12 @@ app.engine('html', require('ejs').renderFile); // html 사용, ejs를 가져옴
 
 app.get('/', getTest);
 
+app.get('/deeplearning',getdeepLearning);
+
 function getTest(req, res){
     let id = req.query.id;
-
     const option = {
-        url : "지민이 서버 ip/SeniorValidate",
+        url : "http://210.117.128.200:8080/SeniorValidate",
         qs:{
             id : id
         }
@@ -29,12 +30,20 @@ function getTest(req, res){
         const checkAccess = html.trim();
 
         if(checkAccess === 'true'){
-            res.redirect("카메라 서버 ip");
+            res.redirect("http://211.117.125.107:34526/");
         }
         else{
             res.status(404).render('errorPage.html');
         }
     });
+}
+
+function getdeepLearning(req, res){
+    let deeplearning = req.query.deeplearning;
+
+    if(deeplearning === 'capstone2022'){
+        res.redirect("http://211.117.125.107:34526/");
+    }
 }
 
 app.all('*',function(req, res){
