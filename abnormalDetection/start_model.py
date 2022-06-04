@@ -10,6 +10,9 @@ from save_abnormal_video import SaveAbnormalVideo
 
 user_id = sys.argv[1]
 rasp_ip = sys.argv[2]
+name = sys.argv[3]
+print(user_id, rasp_ip, name)
+
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
 
@@ -22,10 +25,9 @@ pose = mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6)
 
-stream_link = "http://" + rasp_ip + ":9090/deeplearning/?deeplearning=capstone2022"
-print(user_id, stream_link)
+# stream_link = "http://" + rasp_ip + ":9090/deeplearning/?deeplearning=capstone2022"
 
-videoStream = VideoStream(stream_link)
+videoStream = VideoStream(0)
 saveAbnormalVideo = SaveAbnormalVideo(videoStream)
 
 seq = []
@@ -109,7 +111,7 @@ while videoStream.capture.isOpened():
             
             if pre_action == "fall" and this_action != "fall":
                 saveAbnormalVideo.set_img_queue(img_queue)
-                saveAbnormalVideo.save_abnormal_video(user_id)
+                saveAbnormalVideo.save_abnormal_video(user_id, name)
 
             pre_action = this_action
 

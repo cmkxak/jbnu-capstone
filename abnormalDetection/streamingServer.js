@@ -10,12 +10,12 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
 })
  
-app.get('/*', function(req, res) {
-    const {pathname} = url.parse(req.url, true)
-    const path = `abnormalVideo/${pathname}`
+app.get('/video/:filename', function(request, response) {
+    const pathname = request.params.filename
+    const path = `./abnormalVideo/${pathname}`
     const stat = fs.statSync(path)
     const fileSize = stat.size
-    const range = req.headers.range
+    const range = request.headers.range
  
     if (range) {
     const parts = range.replace(/bytes=/, "").split("-")
@@ -33,23 +33,23 @@ app.get('/*', function(req, res) {
         'Content-Type': 'video/mp4',
     }
     
-    res.writeHead(206, head)
-    file.pipe(res)
+    response.writeHead(206, head)
+    file.pipe(response)
     } else {
     const head = {
         'Content-Length': fileSize,
         'Content-Type': 'video/mp4',
     }
-        res.writeHead(200, head)
-        fs.createReadStream(path).pipe(res)
+    response.writeHead(200, head)
+        fs.createReadStream(path).pipe(response)
     }
 })
 
-app.get('/post/:user_id/:rasp_ip', (request, response) => {
-    if( !request.params.user_id && !request.params.rasp_ip ){
+app.get('/post/:user_id/:rasp_ip/:name', (request, response) => {
+    if( !request.params.user_id && !request.params.rasp_ip && !request.params.name){
         response.status(404).send('parameter error')
     } else
-        result = spawn('python', ['start_model.py', request.params.user_id, request.params.rasp_ip])
+        result = spawn('python', ['start_model.py', request.params.user_id, request.params.rasp_ip, request.params.name])
         result.stdout.on('data', function(data) {
             console.log(data.toString());
         });

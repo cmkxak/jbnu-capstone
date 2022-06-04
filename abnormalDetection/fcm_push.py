@@ -1,6 +1,6 @@
 from ipaddress import ip_address
 from pyfcm import FCMNotification
-from database.user_DAO import UserDAO
+from database.userDAO import UserDAO
 
 class FcmNotification:
     # 파이어베이스 콘솔에서 얻어 온 API키를 넣어 줌
@@ -19,8 +19,8 @@ class FcmNotification:
 
         data_message = {
             "body" : state + " 알림입니다."
-            "ip" : self.userDAO.getIpAddress
-            "phoneNumber" : self.userDAO.getPhoneNumber
+            # "ip" : self.userDAO.getIpAddress
+            # "phoneNumber" : self.userDAO.getPhoneNumber
         }
         
         #data payload만 보내야 안드로이드 앱에서 백그라운드/포그라운드 두가지 상황에서 onMessageReceived()가 실행됨
