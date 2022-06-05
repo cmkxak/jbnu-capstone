@@ -45,11 +45,12 @@ app.get('/video/:filename', function(request, response) {
     }
 })
 
-app.get('/post/:user_id/:rasp_ip/:name', (request, response) => {
+app.get(`/post/:user_id/:rasp_ip/:name`, (request, response) => {
     if( !request.params.user_id && !request.params.rasp_ip && !request.params.name){
         response.status(404).send('parameter error')
     } else
-        result = spawn('python', ['start_model.py', request.params.user_id, request.params.rasp_ip, request.params.name])
+        paramDecoded = decodeURIComponent(request.params.name)
+        result = spawn('python', ['start_model.py', request.params.user_id, request.params.rasp_ip, paramDecoded])
         result.stdout.on('data', function(data) {
             console.log(data.toString());
         });
