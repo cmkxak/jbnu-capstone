@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding.imageInvalid.setVisibility(View.INVISIBLE);
         canRegister = false;
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);

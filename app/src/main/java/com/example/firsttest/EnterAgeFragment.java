@@ -1,17 +1,13 @@
 package com.example.firsttest;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 
 public class EnterAgeFragment extends Fragment {
@@ -61,13 +56,13 @@ public class EnterAgeFragment extends Fragment {
                 } else {
                     switch (actionId) {
                         case EditorInfo.IME_ACTION_DONE:
-                            sendEventListener.updateName(userAge);
+                            sendEventListener.updateAge(userAge);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
 
                             break;
                         default:
-                            sendEventListener.updateName(userAge);
+                            sendEventListener.updateAge(userAge);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
                             break;

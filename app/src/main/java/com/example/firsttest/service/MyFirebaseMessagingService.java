@@ -52,7 +52,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
         String userIP = remoteMessage.getData().get("ip");
-        String userPhoneNumber = remoteMessage.getData().get("phoneNumber");
 
         if (remoteMessage != null && remoteMessage.getData().size() > 0) {
             prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -63,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             //알림 on/off 설정, default 알림은 true
             if (onVoiceNotification || onAbnormalDetectNotification) {
-                sendNotification(title, body, userIP, userPhoneNumber);
+                sendNotification(title, body, userIP);
             } else {
                 mManager.deleteNotificationChannel(getString(R.string.default_notification_channel_id));
             }
@@ -71,12 +70,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     //FCM에서 메시지를 받고 Notification을 띄워주는 것 구현
-    private void sendNotification(String title, String body, String userIP, String userPhoneNumber) {
+    private void sendNotification(String title, String body, String userIP) {
         Intent intent = new Intent(this, EmergencyLiveActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         intent.putExtra("userIP", userIP);
-        intent.putExtra("userPhoneNumber", userPhoneNumber);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)currentTimeMillis(), intent,
                 PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);

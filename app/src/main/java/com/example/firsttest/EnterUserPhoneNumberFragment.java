@@ -55,13 +55,13 @@ public class EnterUserPhoneNumberFragment extends Fragment {
                 } else {
                     switch (actionId) {
                         case EditorInfo.IME_ACTION_DONE:
-                            sendEventListener.updateName(userPhoneNumber);
+                            sendEventListener.updatePhoneNumber(userPhoneNumber);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
 
                             break;
                         default:
-                            sendEventListener.updateName(userPhoneNumber);
+                            sendEventListener.updatePhoneNumber(userPhoneNumber);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
                             break;

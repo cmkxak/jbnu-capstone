@@ -25,8 +25,6 @@ public class WriteUserInfoActivity extends AppCompatActivity implements SendEven
     private final int ENTER_USERNAME_FRAGMENT = 1;
     private final int ENTER_USERAGE_FRAGMENT = 2;
     private final int ENTER_USERPHONENUMBER_FRAGMENT = 3;
-    private InputMethodManager inputManager;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
