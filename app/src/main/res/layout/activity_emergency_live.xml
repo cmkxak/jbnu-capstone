@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/backButton"
+            android:id="@+id/btn_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
@@ -39,9 +39,22 @@
             app:layout_constraintBottom_toTopOf="@+id/liveStreaming"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.376"
-            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/btn_back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.102" />
+
+        <ImageView
+            android:id="@+id/btn_replay"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_menu_backbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
     </LinearLayout>
 
     <WebView
