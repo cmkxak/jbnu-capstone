@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/view_modify_fragment"
-    tools:context=".WriteUserInfoActivity"
+    tools:context=".ui.WriteUserInfoActivity"
     >
 
     <androidx.appcompat.widget.LinearLayoutCompat

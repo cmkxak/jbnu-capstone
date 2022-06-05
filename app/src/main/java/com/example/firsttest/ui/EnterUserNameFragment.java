@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.firsttest.R;
+import com.example.firsttest.SendEventListener;
 
 public class EnterUserNameFragment extends Fragment {
     private EditText editText;

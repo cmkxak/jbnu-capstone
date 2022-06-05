@@ -1,26 +1,22 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firsttest.R;
+import com.example.firsttest.adapter.UserAdapter;
 import com.example.firsttest.databinding.ActivitySettingUserlistBinding;
-import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
+import com.example.firsttest.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SettingUserListActivity extends AppCompatActivity{
         private RecyclerView recyclerView;

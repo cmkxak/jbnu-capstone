@@ -1,7 +1,8 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class EnterAgeFragment extends Fragment {
+import com.example.firsttest.R;
+import com.example.firsttest.SendEventListener;
+
+public class EnterUserPhoneNumberFragment extends Fragment {
     private EditText editText;
+    private ImageView exitImageViewButton;
     private View view;
-    SendEventListener sendEventListener;
-    ImageView exitImageViewButton;
+    private SendEventListener sendEventListener;
 
     //처음 실행됨
     @Override
@@ -34,35 +38,33 @@ public class EnterAgeFragment extends Fragment {
         }
     }
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        view = inflater.inflate(R.layout.fragment_enter_phonenumber, container, false);
 
-        view = inflater.inflate(R.layout.fragment_enter_age, container, false);
-        editText = (EditText) view.findViewById(R.id.edit_modify_userAge);
-        editText.requestFocus();
+        editText = view.findViewById(R.id.edit_modify_userPhoneNumber);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.requestFocus(); // editText 커서 바로 뜨게 설정
 
-        showKeyboard();
-
+       showKeyboard(); //프래그먼트가 뜰 때, 키보드도 바로 보이게 설정
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String userAge = editText.getText().toString();
+                String userPhoneNumber = editText.getText().toString();
                 if (editText.length() == 0) {
                     Toast.makeText(getActivity().getApplicationContext(), "올바른 값을 입력하세요.", Toast.LENGTH_LONG).show();
                 } else {
                     switch (actionId) {
                         case EditorInfo.IME_ACTION_DONE:
-                            sendEventListener.updateAge(userAge);
+                            sendEventListener.updatePhoneNumber(userPhoneNumber);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
 
                             break;
                         default:
-                            sendEventListener.updateAge(userAge);
+                            sendEventListener.updatePhoneNumber(userPhoneNumber);
                             hideKeyboard();
                             view.setVisibility(View.GONE);
                             break;
@@ -72,25 +74,27 @@ public class EnterAgeFragment extends Fragment {
             }
         });
 
-
         exitImageViewButton = (ImageView) view.findViewById(R.id.btn_exitEnterUserAge);
+
+        //x 버튼 클릭시
         exitImageViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideKeyboard();
                 view.setVisibility(View.GONE);
+
             }
         });
 
+        //입력 버튼 누를 시, textView의 나타내주는 값 변경되도록 함.
+        //입력 버튼 누를 시, db에 업데이트 쿼리를 쏴줌
         return view;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
 
     private void hideKeyboard()
     {

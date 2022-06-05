@@ -1,11 +1,10 @@
-package com.example.firsttest.ui.setting;
+package com.example.firsttest.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,12 +17,10 @@ import androidx.preference.PreferenceManager;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.firsttest.DeleteRequest;
-import com.example.firsttest.GuardianDeleteRequest;
-import com.example.firsttest.LoginActivity;
-import com.example.firsttest.SettingUserListActivity;
+import com.example.firsttest.request.GuardianDeleteRequest;
+import com.example.firsttest.ui.LoginActivity;
+import com.example.firsttest.ui.SettingUserListActivity;
 import com.example.firsttest.R;
-import com.example.firsttest.SignUpActivity;
 
 import org.json.JSONObject;
 

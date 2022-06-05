@@ -1,24 +1,21 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import static android.app.PendingIntent.getActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
 
+import com.example.firsttest.R;
+import com.example.firsttest.SendEventListener;
 import com.example.firsttest.databinding.ActivityWriteUserinfoBinding;
 
-public class WriteUserInfoActivity extends AppCompatActivity implements SendEventListener{
+public class WriteUserInfoActivity extends AppCompatActivity implements SendEventListener {
     private ActivityWriteUserinfoBinding binding;
     private SharedPreferences sharedPreferences;
     private Intent intent;
