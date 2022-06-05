@@ -7,18 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.preference.PreferenceManager;
 
+import com.example.firsttest.ReplayListActivity;
 import com.example.firsttest.UserListActivity;
 import com.example.firsttest.databinding.ActivityEmergencyLiveBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class EmergencyLiveActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
@@ -32,26 +32,51 @@ public class EmergencyLiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEmergencyLiveBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         webSettings = binding.liveStreaming.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
-//        webSettings.setSupportZoom(false); // 화면 줌 허용 여부
-//        webSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
+        webSettings.setSupportZoom(false); // 화면 줌 허용 여부
+        webSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
+        webSettings.setUseWideViewPort(true);
+        binding.liveStreaming.setInitialScale(1);
 
         Intent intent = getIntent();
         String userIP = intent.getStringExtra("userIP");
-        String userPhoneNumber = intent.getStringExtra("userPhoneNumber");
-        binding.liveStreaming.loadUrl(userIP+":9090/?"+"userPhoneNumber=" + userPhoneNumber);
+        String id = prefs.getString("id", " ");
+
+        binding.liveStreaming.setWebChromeClient(new WebChromeClient());
+        binding.liveStreaming.loadUrl(userIP+":9090/?"+"id=" + id);
+
+        binding.liveStreaming.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url){
+                // do your handling codes here, which url is the requested url
+                // probably you need to open that url rather than redirect:
+                view.loadUrl(url);
+                return false; // then it is not handled by default action
+            }
+        });
 
         //뒤로가기 버튼 클릭
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //메인 액티비티로 이동
                 Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
                 prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String userId = prefs.getString("id", " ");
+                intent.putExtra("id", userId);
+                startActivity(intent);
+            }
+        });
+
+        binding.btnReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //메인 액티비티로 이동
+                Intent intent = new Intent(getApplicationContext(), ReplayListActivity.class);
                 String userId = prefs.getString("id", " ");
                 intent.putExtra("id", userId);
                 startActivity(intent);
