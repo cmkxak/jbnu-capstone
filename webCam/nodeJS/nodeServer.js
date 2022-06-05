@@ -3,11 +3,11 @@ const request = require('request');
 const app = express();
 const spawn = require('child_process').spawn;
 
-const result = spawn('python', ['getIP.py']);
+const result = spawn('python', ['getIP.py']); // webCam의 ip 주소를 얻어오기 위해 .py 실행
 
 var ip;
 result.stdout.on('data', function(data) {
-    ip = data.toString().trim()
+    ip = data.toString().trim() // ip 주소를 얻어 ip에 넣음
 })
 
 const server = app.listen(9090, () => {
