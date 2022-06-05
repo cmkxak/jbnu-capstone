@@ -20,9 +20,6 @@ class UserDAO():
             conn.close()
 
 
-        
-
-
     def getToken(self, userid):
         try:
             conn = self.connector.getConnection()

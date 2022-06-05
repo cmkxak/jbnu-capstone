@@ -11,7 +11,6 @@ from save_abnormal_video import SaveAbnormalVideo
 user_id = sys.argv[1]
 rasp_ip = sys.argv[2]
 name = sys.argv[3]
-print(user_id, rasp_ip, name)
 
 actions = ['error', 'suffer', 'fall', 'sit', 'sit', 'walk', 'stand', 'lie', 'jump']
 seq_length = 30
@@ -101,7 +100,7 @@ while videoStream.capture.isOpened():
             if this_action == "fall":
                 cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2)
                 if pre_action != "fall":
-                    fcmNotification.sendMessage(this_action)
+                    fcmNotification.sendMessage(state = this_action, ip_address = rasp_ip)
             elif this_action == "unknown":
                 cv2.putText(img, f'{this_action.upper()}', org=(int(res.pose_landmarks.landmark[0].x * img.shape[1]), int(res.pose_landmarks.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 255, 0), thickness=2)
             elif this_action is not None:
