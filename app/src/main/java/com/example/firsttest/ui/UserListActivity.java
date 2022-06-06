@@ -103,9 +103,7 @@ public class UserListActivity extends AppCompatActivity {
                 Toast.makeText(UserListActivity.this, user.getUserIP(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(UserListActivity.this, EmergencyLiveActivity.class);
                 String userIP = user.getUserIP();
-//                String userPhoneNumber = user.getUserPhoneNumber();
                 intent.putExtra("userIP",userIP);
-//                intent.putExtra("userPhoneNumber", userPhoneNumber);
                 startActivity(intent);
             }
         });
@@ -116,6 +114,16 @@ public class UserListActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        //비디오 버튼 클릭 시
+        binding.btnReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //메인 액티비티로 이동
+                Intent intent = new Intent(getApplicationContext(), ReplayListActivity.class);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -140,7 +148,6 @@ public class UserListActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "응답:" + response, Toast.LENGTH_SHORT).show();
                         Log.d("유저리스트" , response);
-
                     }
                 };
 

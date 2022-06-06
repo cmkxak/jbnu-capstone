@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         >
 
         <ImageView
@@ -29,12 +30,23 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/btn_replay"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_menu_video"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
         android:id="@+id/setting"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_menu_setting"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
         android:layout_gravity="right"
          />
 
