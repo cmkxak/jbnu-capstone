@@ -110,7 +110,7 @@ while videoStream.capture.isOpened():
             
             if pre_action == "fall" and this_action != "fall":
                 saveAbnormalVideo.set_img_queue(img_queue)
-                saveAbnormalVideo.save_abnormal_video(user_id, name)
+                saveAbnormalVideo.save_abnormal_video(user_id, name, rasp_ip)
 
             pre_action = this_action
 

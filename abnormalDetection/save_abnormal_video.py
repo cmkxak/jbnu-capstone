@@ -16,7 +16,7 @@ class SaveAbnormalVideo():
     def set_img_queue(self, img_queue):
         self.img_queue = img_queue
 
-    def save_abnormal_video(self, id, name):
+    def save_abnormal_video(self, id, name, ip):
         file_name = str(time.time())
         try:
             self.thread = Thread(target=self.save_video, args=())
@@ -27,7 +27,7 @@ class SaveAbnormalVideo():
             pass
         else:
             url = "115.143.101.226:18909/video/" + f'{file_name}.mp4'
-            self.videoDAO.insertValue(id, name, url)
+            self.videoDAO.insertValue(id, name, url, ip)
 
     def save_video(self):
         for img in self.img_queue:
