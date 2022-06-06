@@ -123,7 +123,7 @@ public class UserListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //메인 액티비티로 이동
                 Intent intent = new Intent(getApplicationContext(), ReplayListActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
             }
         });
 

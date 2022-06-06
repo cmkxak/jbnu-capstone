@@ -50,6 +50,7 @@ public class ReplayListActivity extends AppCompatActivity {
         recyclerView.setAdapter(replayAdatper);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String id = prefs.getString("id", " ");
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -77,7 +78,6 @@ public class ReplayListActivity extends AppCompatActivity {
             }
         };
 
-        String id = prefs.getString("id", " ");
         TimeStampRequest timeStampRequest = new TimeStampRequest(id, responseListener);
         requestQueue.add(timeStampRequest);
 
@@ -96,7 +96,9 @@ public class ReplayListActivity extends AppCompatActivity {
        binding.btnBack.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               startActivity(new Intent(getApplicationContext(), UserListActivity.class));
+               Intent i = new Intent(getApplicationContext(), UserListActivity.class);
+               i.putExtra("id",id);
+               startActivity(i);
            }
        });
     }
