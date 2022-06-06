@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.firsttest.databinding.ActivityLoginBinding;
+import com.example.firsttest.request.LoginRequest;
 
 import org.json.JSONObject;
 

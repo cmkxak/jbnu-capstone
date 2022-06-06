@@ -16,13 +16,13 @@
 
         <!--> 회원가입 화면 <!-->
         <activity
-            android:name=".SignUpActivity"
+            android:name=".ui.SignUpActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar" />
 
         <!--> 로그인 화면 <!-->
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FirstTest.NoActionBar">
@@ -34,33 +34,33 @@
 
         <!--> 유저리스트 화면 <!-->
         <activity
-            android:name=".UserListActivity"
+            android:name=".ui.UserListActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"
             />
 
 
         <!--> 실시간 모니터링 화면 및 응급 화면 <!-->
-        <activity android:name=".ui.emergencylive.EmergencyLiveActivity"
+        <activity android:name=".ui.EmergencyLiveActivity"
             android:exported="true"
             android:theme="@style/Theme.FirstTest.NoActionBar"
             />
 
         <!--> 환경 설정 화면 <!-->
         <activity
-            android:name=".ui.setting.MySettingActivity"
+            android:name=".ui.MySettingActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.Preference"
         />
 
 
         <!--> 환경 설정에서의 독거노인 정보 변경 화면 <!-->
-        <activity android:name=".SettingUserListActivity"
+        <activity android:name=".ui.SettingUserListActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"/>
 
         <!-->  독거 노인 정보 수정 화면 <!-->
-        <activity android:name=".WriteUserInfoActivity"
+        <activity android:name=".ui.WriteUserInfoActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"/>
 

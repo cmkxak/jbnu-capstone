@@ -1,11 +1,10 @@
-package com.example.firsttest.ui.emergencylive;
+package com.example.firsttest.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -16,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.preference.PreferenceManager;
 
-import com.example.firsttest.ReplayListActivity;
-import com.example.firsttest.UserListActivity;
 import com.example.firsttest.databinding.ActivityEmergencyLiveBinding;
 
 public class EmergencyLiveActivity extends AppCompatActivity {
@@ -48,7 +45,7 @@ public class EmergencyLiveActivity extends AppCompatActivity {
         String id = prefs.getString("id", " ");
 
         binding.liveStreaming.setWebChromeClient(new WebChromeClient());
-        binding.liveStreaming.loadUrl(userIP+":9090/?"+"id=" + id);
+        binding.liveStreaming.loadUrl("http://"+userIP+":9090/?"+"id=" + id);
 
         binding.liveStreaming.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url){

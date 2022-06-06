@@ -2,6 +2,7 @@ const express = require('express');
 const request = require('request');
 const app = express();
 
+<<<<<<< HEAD
 const spawn = require('child_process').spawn;
 const result = spawn('python', ['getIP.py']);
 
@@ -9,6 +10,13 @@ var ip;
 result.stdout.on('data', function(data) {
     ip = data.toString()
     console.log(ip)
+=======
+const result = spawn('python', ['getIP.py']); // webCam의 ip 주소를 얻어오기 위해 .py 실행
+
+var ip;
+result.stdout.on('data', function(data) {
+    ip = data.toString().trim() // ip 주소를 얻어 ip에 넣음
+>>>>>>> 22fbb157ef2e4e6360caf9aa7463cf3c4c515cc6
 })
 console.log(ip)
 

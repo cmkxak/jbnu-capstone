@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.firsttest.R;
+import com.example.firsttest.adapter.UserAdapter;
 import com.example.firsttest.databinding.ActivityUserListBinding;
-import com.example.firsttest.ui.emergencylive.EmergencyLiveActivity;
-import com.example.firsttest.ui.setting.MySettingActivity;
+import com.example.firsttest.model.User;
+import com.example.firsttest.request.DeleteRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -108,6 +110,15 @@ public class UserListActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         binding.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +126,7 @@ public class UserListActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
