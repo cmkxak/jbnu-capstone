@@ -18,8 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.firsttest.request.GuardianDeleteRequest;
-import com.example.firsttest.ui.LoginActivity;
-import com.example.firsttest.ui.SettingUserListActivity;
 import com.example.firsttest.R;
 
 import org.json.JSONObject;
@@ -35,19 +33,6 @@ public class MySettingFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         setPreferencesFromResource(R.xml.user_preference, rootKey);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        pref_correctSeniorInfo = findPreference("correctSeniorInfo");
-        pref_correctSeniorInfo.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            //관리 대상 정보 수정 클릭 시
-            @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
-                String userId = prefs.getString("id", " ");
-                Intent intent = new Intent(getActivity(), SettingUserListActivity.class);
-                intent.putExtra("id", userId);
-                startActivity(intent);
-                return true;
-            }
-        });
 
         pref_deleteMember = findPreference("deleteMember");
         pref_deleteMember.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -72,7 +57,7 @@ public class MySettingFragment extends PreferenceFragmentCompat {
                                     Toast.makeText(getActivity(), "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                                     startActivity(intent);
-                                } else {// 회원가입이 안된다면
+                                } else {
                                     Toast.makeText(getActivity(), "탈퇴를 실패했습니다. 다시 한 번 확인해 주세요.", Toast.LENGTH_SHORT).show();
                                 }
                             }catch (Exception e) {

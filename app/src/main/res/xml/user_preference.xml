@@ -27,19 +27,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="정보 수정"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="correctSeniorInfo"
-            app:title="관리 대상 정보 수정"
-            android:summary="관리 중인 어르신의 정보를 수정할 수 있어요."
-            />
-
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="회원 관리"
         app:iconSpaceReserved="false">
 
