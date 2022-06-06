@@ -1,14 +1,16 @@
 const express = require('express');
 const request = require('request');
 const app = express();
-const spawn = require('child_process').spawn;
 
+const spawn = require('child_process').spawn;
 const result = spawn('python', ['getIP.py']);
 
 var ip;
 result.stdout.on('data', function(data) {
-    ip = data.toString().trim()
+    ip = data.toString()
+    console.log(ip)
 })
+console.log(ip)
 
 const server = app.listen(9090, () => {
     console.log('Start Server : localhost:9090');
@@ -38,7 +40,7 @@ function getEqualId(req, res){
         const checkAccess = body.trim()
 
         if(checkAccess === 'true'){
-            res.redirect("http://"+ ip +":34526/");
+            res.redirect("http://211.117.125.107:34526/");
         }
         else{
             res.status(404).render('errorPage.html');
@@ -50,7 +52,7 @@ function getdeepLearning(req, res){
     let deeplearning = req.query.deeplearning;
 
     if(deeplearning === 'capstone2022'){
-        res.redirect("http://" + ip + ":34526/");
+        res.redirect("http://211.117.125.107:34526/");
     }
 }
 
