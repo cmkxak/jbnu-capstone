@@ -8,5 +8,5 @@
         android:id="@+id/settings_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.firsttest.ui.setting.MySettingFragment"/>
+        android:name="com.example.firsttest.ui.MySettingFragment"/>
 </FrameLayout>

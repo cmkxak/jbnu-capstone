@@ -6,8 +6,6 @@ const server = app.listen(9090, () => {
     console.log('Start Server : localhost:9090');
 });
 
-console.log('start');
-
 app.set('views', __dirname + '/views'); //dirname == 현재 디렉토리
 app.set('view engine', 'ejs'); // 엔진을 ejs로 설정
 app.engine('html', require('ejs').renderFile); // html 사용, ejs를 가져옴
@@ -18,7 +16,7 @@ app.get('/deeplearning',getdeepLearning);
 
 function getEqualId(req, res){
     let id = req.query.id;
-    
+    //console.log(req.connection.remoteAddress) 들어오는 ip 콘솔에 찍음
     const option = {
         url : "http://210.117.128.200:8080/SeniorValidate",
         qs:{

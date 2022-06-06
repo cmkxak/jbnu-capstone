@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +17,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.firsttest.databinding.ActivitySignUpBinding;
+import com.example.firsttest.request.SignUpRequest;
+import com.example.firsttest.request.ValidateRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -42,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding.imageInvalid.setVisibility(View.INVISIBLE);
         canRegister = false;
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);

@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.model;
 
 public class User {
     String userAge;

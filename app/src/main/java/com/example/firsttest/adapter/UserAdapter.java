@@ -1,4 +1,4 @@
-package com.example.firsttest;
+package com.example.firsttest.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.firsttest.R;
+import com.example.firsttest.model.User;
 
 import java.util.ArrayList;
 
