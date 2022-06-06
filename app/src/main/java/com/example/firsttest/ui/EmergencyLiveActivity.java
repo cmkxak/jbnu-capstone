@@ -69,17 +69,6 @@ public class EmergencyLiveActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnReplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //메인 액티비티로 이동
-                Intent intent = new Intent(getApplicationContext(), ReplayListActivity.class);
-                String userId = prefs.getString("id", " ");
-                intent.putExtra("id", userId);
-                startActivity(intent);
-            }
-        });
-
         //간편 신고 기능
         binding.report.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(EmergencyLiveActivity.this);
