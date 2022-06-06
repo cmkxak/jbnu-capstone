@@ -53,14 +53,13 @@
             android:theme="@style/Theme.FirstTest.Preference"
         />
 
-
-        <!--> 환경 설정에서의 독거노인 정보 변경 화면 <!-->
-        <activity android:name=".ui.SettingUserListActivity"
+        <!--> 이상 행동 다시 보기 저장된 영상 리스트 화면 <!-->
+        <activity android:name=".ui.ReplayListActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"/>
 
-        <!-->  독거 노인 정보 수정 화면 <!-->
-        <activity android:name=".ui.WriteUserInfoActivity"
+        <!--> 이상 행동 다시 보기 영상 플레이어 화면<!-->
+        <activity android:name=".ui.ReplayVideoActivity"
             android:exported="false"
             android:theme="@style/Theme.FirstTest.NoActionBar"/>
 
@@ -72,6 +71,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <!--> Notification channel id for FCM SERVICE <!-->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
