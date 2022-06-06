@@ -16,7 +16,7 @@ ip = urllib.request.urlopen('https://ident.me').read().decode('utf8') # ip 동�
 
 def sendMessage(message: str):
     data_message = {
-        "title" : "이중범짱짱",
+        "title" : "4.O",
         "body" : message,
         "ip" : ip
     }
