@@ -47,20 +47,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String body = remoteMessage.getData().get("body");
         String userIP = remoteMessage.getData().get("ip");
 
-        if (remoteMessage != null && remoteMessage.getData().size() > 0) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-            boolean onVoiceNotification = prefs.getBoolean("voiceNotifications", false);
-            boolean onAbnormalDetectNotification = prefs.getBoolean("abnormalBehaviorDetection",false);
-
-            //알림 on/off 설정, default 알림은 true
-            if (onVoiceNotification || onAbnormalDetectNotification) {
-                sendNotification(title, body, userIP);
-            } else {
-                mManager.deleteNotificationChannel(getString(R.string.default_notification_channel_id));
-            }
+        if (remoteMessage.getData().size() > 0) {
+            setNotification(title,body,userIP);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setNotification(String title, String body, String userIP){
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        boolean onVoiceNotification = prefs.getBoolean("voiceNotifications", false);
+        boolean onAbnormalDetectNotification = prefs.getBoolean("abnormalBehaviorDetection",false);
+
+        if(onVoiceNotification){
+            sendNotification(title, body, userIP);
+        }else if(onAbnormalDetectNotification){
+            sendNotification(title, body, userIP);
+        }else
+            mManager.deleteNotificationChannel(getString(R.string.default_notification_channel_id));
     }
 
     //FCM에서 메시지를 받고 Notification을 띄워주는 것 구현
